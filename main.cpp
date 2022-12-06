@@ -89,17 +89,20 @@ int main() {
     }while(!(std::cin >> shootMode) or shootMode < 1 or shootMode > 2);
     // init the variables to play
     Player player1, player2;
+    initializeGrid(player1.grid);
+    initializeGrid(player2.grid);
     player1.score = 0;
     player2.score = 1;
-    int firstPlayerIndice = randomIntBetween(0, 1);
+    int playerIndice = randomIntBetween(0, 1);
     Player playerList[2] = {player1, player2};
+    int shotLeft = 3;
     if (playingMode == 1){
         askPlayersNames(player1, player2);
         clearScreen();
         displayTitle();
         std::cout<< std::endl << std::endl;
         char isRandomPlacement;
-        std::cout << player1.name << "Would you like a random placement for your ship? (Y/N/y/n) : ";
+        std::cout << player1.name << " would you like a random placement for your ship? (Y/N/y/n) : ";
         while (!(cin >> isRandomPlacement) and !(isRandomPlacement == 'Y' or isRandomPlacement == 'y' or isRandomPlacement == 'N' or isRandomPlacement == 'n')){
             std::cin.clear();
             std::cin.ignore();
@@ -107,7 +110,7 @@ int main() {
             displayTitle();
             std::cout<< std::endl << std::endl;
             std::cout << "Invalid Entry." << std::endl;
-            std::cout << player1.name << "Would you like a random placement for your ship? (Y/N/y/n) : ";
+            std::cout << player1.name << " would you like a random placement for your ship? (Y/N/y/n) : ";
         }
         if (isRandomPlacement == 'Y' or isRandomPlacement == 'y'){
             randomPlacement(player1);
@@ -115,6 +118,8 @@ int main() {
         else {
             askPlayerToPlace(player1, player2);
         }
+        clearScreen();
+        displayTitle();
         std::cout << player2.name << "Would you like a random placement for your ship? (Y/N/y/n) : ";
         while (!(cin >> isRandomPlacement) and !(isRandomPlacement == 'Y' or isRandomPlacement == 'y' or isRandomPlacement == 'N' or isRandomPlacement == 'n')){
             std::cin.clear();
@@ -154,12 +159,26 @@ int main() {
         char AICurrentX = 'A'-1;
         int AICurrentY = -1;
     }
+    if (shootMode == 2){
+        int shotLeft = 3;
+    }
     clearScreen();
     displayTitle();
-    std::cout << std::endl << std::endl << "The first player is " << playerList[0+firstPlayerIndice].name << std::endl;
+    std::cout << std::endl << std::endl << "The first player is " << playerList[0+playerIndice].name << std::endl;
     do{
         switch (playingMode) {
         case 1:
+            askPlayerToShot(playerList[playerIndice], playerList[1-playerIndice]);
+            if (shootMode == 2){
+                shotLeft -= 1;
+                if (shotLeft < 1){
+                    shotLeft = 3;
+                    playerIndice = 1 - playerIndice;
+                }
+            }
+            else {
+                playerIndice = 1 - playerIndice;
+            }
             break;
         default:
             break;
