@@ -39,31 +39,36 @@ int main() {
         clearScreen();
         test_structureDonnees();
         std::cout << "Press enter to continue.";
+        std::cin.clear();
         cin.get();
         clearScreen();
         test_checkCoordinate();
         std::cout << "Press enter to continue.";
+        std::cin.clear();
         cin.get();
         clearScreen();
         test_initializeGrid();
         std::cout << "Press enter to continue.";
+        std::cin.clear();
         cin.get();
         clearScreen();
         test_placeShip();
         std::cout << "Press enter to continue.";
+        std::cin.clear();
         cin.get();
         clearScreen();
         test_aleadyShot();
         std::cout << "Press enter to continue.";
+        std::cin.clear();
         cin.get();
         clearScreen();
         test_hitOrMiss();
         std::cout << "Press enter to continue.";
+        std::cin.clear();
         cin.get();
         clearScreen();
         test_isBoatSank();
         std::cout << "Press enter to continue.";
-        cin.get();
     }
 
     // ask if there is one or two player and the difficulty of the AI if there is only one player
@@ -181,7 +186,7 @@ int main() {
     clearScreen();
     displayTitle();
     std::cout << std::endl << std::endl << "The first player is " << playerList[playerIndice].name << std::endl;
-    std::cout << "Press Enter to continu." << std::endl;
+    std::cout << "Press Enter to continue." << std::endl;
     std::cin.clear();
     std::cin.ignore();
     std::cin.get();
@@ -202,14 +207,14 @@ int main() {
             else {
                 playerIndice = 1 - playerIndice;
             }
-            std::cout << "Press Enter to continu." << std::endl;
+            std::cout << "Press Enter to continue." << std::endl;
             std::cin.ignore();
             std::cin.get();
             break;
         case 2:
             if (playerList[playerIndice].name != "AI"){
                 askPlayerToShot(playerList[playerIndice], playerList[1-playerIndice]);
-                std::cout << "Press Enter to continu." << std::endl;
+                std::cout << "Press Enter to continue." << std::endl;
                 std::cin.ignore();
                 std::cin.get();
             }
@@ -218,7 +223,7 @@ int main() {
                 displayPlayerNames(playerList[0], playerList[1]);
                 displayGrid(playerList[0], playerList[1]);
                 AIRandomShoot(playerList[0].grid, playerList[1]);
-                std::cout << "Press Enter to continu." << std::endl;
+                std::cout << "Press Enter to continue." << std::endl;
                 std::cin.get();
             }
             if (shootMode == 2){
@@ -235,7 +240,7 @@ int main() {
         case 3:
              if (playerList[playerIndice].name != "AI"){
                 askPlayerToShot(playerList[playerIndice], playerList[1-playerIndice]);
-                std::cout << "Press Enter to continu." << std::endl;
+                std::cout << "Press Enter to continue." << std::endl;
                 std::cin.ignore();
                 std::cin.get();
             }
@@ -244,7 +249,7 @@ int main() {
                 displayPlayerNames(playerList[0], playerList[1]);
                 displayGrid(playerList[0], playerList[1]);
                 AIOptimisedShoot(playerList[playerIndice], playerList[1-playerIndice].grid, AIFound, AIDir, AIPreviousX, AIPreviousY, AIOriX, AIOriY);
-                std::cout << "Press Enter to continu." << std::endl;
+                std::cout << "Press Enter to continue." << std::endl;
                 std::cin.get();
             }
             if (shootMode == 2){
@@ -261,7 +266,7 @@ int main() {
         case 4:
             if (playerList[playerIndice].name != "AI"){
                 askPlayerToShot(playerList[playerIndice], playerList[1-playerIndice]);
-                std::cout << "Press Enter to continu." << std::endl;
+                std::cout << "Press Enter to continue." << std::endl;
                 std::cin.ignore();
                 std::cin.get();
             }
@@ -270,7 +275,7 @@ int main() {
                 displayPlayerNames(playerList[0], playerList[1]);
                 displayGrid(playerList[0], playerList[1]);
                 AICrossShoot(playerList[playerIndice], playerList[1-playerIndice].grid, AICurrentX, AICurrentY, AIFound, AIDir, AIPreviousX, AIPreviousY, AIOriX, AIOriY);
-                std::cout << "Press Enter to continu." << std::endl;
+                std::cout << "Press Enter to continue." << std::endl;
                 std::cin.get();
             }
             if (shootMode == 2){
@@ -288,6 +293,7 @@ int main() {
             break;
         }
     }while (playerList[0].score < NBSHIPS and playerList[1].score  < NBSHIPS);
+    clearScreen();
     if (playerList[0].score == NBSHIPS) {
         displayWin(playerList[0]);
     }

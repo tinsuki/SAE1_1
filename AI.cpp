@@ -6,12 +6,12 @@ void AIRandomShoot(Cell aGrid[][GRIDSIZE], Player &anAI){
     char x;
     int y;
     Coordinate coordi;
-    x = randomIntBetween(0, GRIDSIZE-2)+'A';
-    y = randomIntBetween(1, GRIDSIZE-1);
+    x = randomIntBetween(0, GRIDSIZE-3)+'A';
+    y = randomIntBetween(1, GRIDSIZE-2);
     coordi = {x, y};
     while (alreadyShot(aGrid, coordi)){
-        x = randomIntBetween(0, GRIDSIZE-2)+'A';
-        y = randomIntBetween(1, GRIDSIZE-1);
+        x = randomIntBetween(0, GRIDSIZE-3)+'A';
+        y = randomIntBetween(1, GRIDSIZE-2);
         coordi = {x, y};
     }
     std::cout << "AI shoot in " << x << y << std::endl;
@@ -36,12 +36,12 @@ void AIOptimisedShoot(Player &anAI, Cell aGrid[][GRIDSIZE], bool& found, char& d
     Coordinate coordi;
     char oriDir = dir;
     if (!found){
-        x = randomIntBetween(0, GRIDSIZE-2)+'A';
-        y = randomIntBetween(1, GRIDSIZE-1);
+        x = randomIntBetween(0, GRIDSIZE-3)+'A';
+        y = randomIntBetween(1, GRIDSIZE-2);
         coordi = {x, y};
         while (alreadyShot(aGrid, coordi)){
-            x = randomIntBetween(0, GRIDSIZE-2)+'A';
-            y = randomIntBetween(1, GRIDSIZE-1);
+            x = randomIntBetween(0, GRIDSIZE-3)+'A';
+            y = randomIntBetween(1, GRIDSIZE-2);
             coordi = {x, y};
         }
     }
