@@ -2,46 +2,46 @@
 #include "functions.h"
 #include "typeDef.h"
 
-void AIRandomShoot(Cell aGrid[][MYSIZE], Player anAI){
+void AIRandomShoot(Cell aGrid[][GRIDSIZE], Player &anAI){
     char x;
     int y;
     Coordinate coordi;
-    x = randomIntBetween(0, MYSIZE-2)+'A';
-    y = randomIntBetween(1, MYSIZE-1);
+    x = randomIntBetween(0, GRIDSIZE-2)+'A';
+    y = randomIntBetween(1, GRIDSIZE-1);
     coordi = {x, y};
     while (alreadyShot(aGrid, coordi)){
-        x = randomIntBetween(0, MYSIZE-2)+'A';
-        y = randomIntBetween(1, MYSIZE-1);
+        x = randomIntBetween(0, GRIDSIZE-2)+'A';
+        y = randomIntBetween(1, GRIDSIZE-1);
         coordi = {x, y};
     }
-    std::cout << "AI shot in " << x << y << std::endl;
+    std::cout << "AI shoot in " << x << y << std::endl;
     if (hitOrMiss(aGrid, coordi)){
         if (isBoatSank(aGrid, y, x-'A'+1)){
-            std::cout << "Navire coule" << std::endl;
+            std::cout << "Ship sank" << std::endl;
             anAI.score++;
         }
         else {
-            std::cout << "Navire touche" << std::endl;
+            std::cout << "Ship hit" << std::endl;
         }
     }
     else {
-        std::cout << "Plouf" << std::endl;
+        std::cout << "Miss" << std::endl;
     }
 }
 
 
-void AIOptimisedShoot(Player anAI, Cell aGrid[][MYSIZE], bool& found, char& dir, char& previousX, int& previousY, char& oriX, int& oriY){
+void AIOptimisedShoot(Player &anAI, Cell aGrid[][GRIDSIZE], bool& found, char& dir, char& previousX, int& previousY, char& oriX, int& oriY){
     char x;
     int y;
     Coordinate coordi;
     char oriDir = dir;
     if (!found){
-        x = randomIntBetween(0, MYSIZE-2)+'A';
-        y = randomIntBetween(1, MYSIZE-1);
+        x = randomIntBetween(0, GRIDSIZE-2)+'A';
+        y = randomIntBetween(1, GRIDSIZE-1);
         coordi = {x, y};
         while (alreadyShot(aGrid, coordi)){
-            x = randomIntBetween(0, MYSIZE-2)+'A';
-            y = randomIntBetween(1, MYSIZE-1);
+            x = randomIntBetween(0, GRIDSIZE-2)+'A';
+            y = randomIntBetween(1, GRIDSIZE-1);
             coordi = {x, y};
         }
     }
@@ -82,13 +82,13 @@ void AIOptimisedShoot(Player anAI, Cell aGrid[][MYSIZE], bool& found, char& dir,
                     dir = 'v';
                     break;
                 }
-            }while (alreadyShot(aGrid, coordi) or x-'A'<0 or x-'A'+1 > MYSIZE-2 or y < 1 or y > MYSIZE-2);
+            }while (alreadyShot(aGrid, coordi) or x-'A'<0 or x-'A'+1 > GRIDSIZE-2 or y < 1 or y > GRIDSIZE-2);
             break;
         case 'H':
             x = previousX + 1;
             y = previousY;
             coordi = {x, y};
-            if (x-'A'+1 > MYSIZE-2 or alreadyShot(aGrid, coordi)){
+            if (x-'A'+1 > GRIDSIZE-2 or alreadyShot(aGrid, coordi)){
                 x = oriX-1;
                 coordi = {x, y};
                 dir = 'h';
@@ -108,7 +108,7 @@ void AIOptimisedShoot(Player anAI, Cell aGrid[][MYSIZE], bool& found, char& dir,
             x = previousX;
             y = previousY + 1;
             coordi = {x, y};
-            if (y > MYSIZE-2 or alreadyShot(aGrid, coordi)){
+            if (y > GRIDSIZE-2 or alreadyShot(aGrid, coordi)){
                 y = oriY-1;
                 coordi = {x, y};
                 dir = 'v';
@@ -126,7 +126,7 @@ void AIOptimisedShoot(Player anAI, Cell aGrid[][MYSIZE], bool& found, char& dir,
             break;
         }
     }
-    std::cout << "IA tir en " << x << y << std::endl;
+    std::cout << "AI shoot in " << x << y << std::endl;
     if (hitOrMiss(aGrid, coordi)){
         if (isBoatSank(aGrid, y, x-'A'+1)){
             // if boat sank reinit the values
@@ -136,7 +136,7 @@ void AIOptimisedShoot(Player anAI, Cell aGrid[][MYSIZE], bool& found, char& dir,
             previousX = 'A'-1;
             previousY = -1;
             anAI.score++;
-            std::cout << "navire coulé" << std::endl;
+            std::cout << "Ship sank" << std::endl;
         }
         else {
             if (!found){
@@ -152,12 +152,12 @@ void AIOptimisedShoot(Player anAI, Cell aGrid[][MYSIZE], bool& found, char& dir,
                 previousX = x;
                 previousY = y;
             }
-            std::cout << "navire touché" << std::endl;
+            std::cout << "Ship hit" << std::endl;
 
         }
     }
     else{
-        std::cout << "Plouf" << std::endl;
+        std::cout << "Miss" << std::endl;
         if (found){
             if (oriDir != 'N'){
                 switch (dir) {
@@ -193,7 +193,7 @@ void AIOptimisedShoot(Player anAI, Cell aGrid[][MYSIZE], bool& found, char& dir,
     }
 }
 
-void AICrossShoot(Player anAI, Cell aGrid[][MYSIZE],char& currentX, int& currentY, bool& found, char& dir, char& previousX, int& previousY, char& oriX, int& oriY){
+void AICrossShoot(Player &anAI, Cell aGrid[][GRIDSIZE],char& currentX, int& currentY, bool& found, char& dir, char& previousX, int& previousY, char& oriX, int& oriY){
     char x;
     int y;
     Coordinate coordi;
@@ -202,8 +202,8 @@ void AICrossShoot(Player anAI, Cell aGrid[][MYSIZE],char& currentX, int& current
         if (currentY != -1){
             do {
                 currentX += 2;
-                if (currentX - 'A' +1 > MYSIZE-2){
-                    currentX = 'A' + (('A'+(MYSIZE-2))-currentX)+1;
+                if (currentX - 'A' +1 > GRIDSIZE-2){
+                    currentX = 'A' + (('A'+(GRIDSIZE-2))-currentX)+1;
                     currentY++;
                 }
                 x = currentX;
@@ -256,13 +256,13 @@ void AICrossShoot(Player anAI, Cell aGrid[][MYSIZE],char& currentX, int& current
                     dir = 'v';
                     break;
                 }
-            }while (alreadyShot(aGrid, coordi) or x-'A'<0 or x-'A'+1 > MYSIZE-2 or y < 1 or y > MYSIZE-2);
+            }while (alreadyShot(aGrid, coordi) or x-'A'<0 or x-'A'+1 > GRIDSIZE-2 or y < 1 or y > GRIDSIZE-2);
             break;
         case 'H':
             x = previousX + 1;
             y = previousY;
             coordi = {x, y};
-            if (x-'A'+1 > MYSIZE-2 or alreadyShot(aGrid, coordi)){
+            if (x-'A'+1 > GRIDSIZE-2 or alreadyShot(aGrid, coordi)){
                 x = oriX-1;
                 coordi = {x, y};
                 dir = 'h';
@@ -282,7 +282,7 @@ void AICrossShoot(Player anAI, Cell aGrid[][MYSIZE],char& currentX, int& current
             x = previousX;
             y = previousY + 1;
             coordi = {x, y};
-            if (y > MYSIZE-2 or alreadyShot(aGrid, coordi)){
+            if (y > GRIDSIZE-2 or alreadyShot(aGrid, coordi)){
                 y = oriY-1;
                 coordi = {x, y};
                 dir = 'v';
@@ -300,7 +300,7 @@ void AICrossShoot(Player anAI, Cell aGrid[][MYSIZE],char& currentX, int& current
             break;
         }
     }
-    std::cout << "IA tir en " << x << y << std::endl;
+    std::cout << "AI shoot in " << x << y << std::endl;
     if (hitOrMiss(aGrid, coordi)){
         if (isBoatSank(aGrid, y, x-'A'+1)){
             // if boat sank reinit the values
@@ -310,7 +310,7 @@ void AICrossShoot(Player anAI, Cell aGrid[][MYSIZE],char& currentX, int& current
             previousX = 'A'-1;
             previousY = -1;
             anAI.score++;
-            std::cout << "navire coulé" << std::endl;
+            std::cout << "Ship sank" << std::endl;
         }
         else {
             if (!found){
@@ -326,12 +326,12 @@ void AICrossShoot(Player anAI, Cell aGrid[][MYSIZE],char& currentX, int& current
                 previousX = x;
                 previousY = y;
             }
-            std::cout << "navire touché" << std::endl;
+            std::cout << "Ship hit" << std::endl;
 
         }
     }
     else{
-        std::cout << "Plouf" << std::endl;
+        std::cout << "Miss" << std::endl;
         if (found){
             if (oriDir != 'N'){
                 switch (dir) {

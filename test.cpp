@@ -137,19 +137,19 @@ void test_structureDonnees()
     cout << endl;
     pass = 0;
     failed = 0;
-    cout << "********* Start testing of const MYSIZE *********" << endl;
-    if (MYSIZE == 12)
+    cout << "********* Start testing of const GRIDSIZE *********" << endl;
+    if (GRIDSIZE == 12)
     {
-        cout << "PASS \t: MYSIZE" << endl;
+        cout << "PASS \t: GRIDSIZE" << endl;
         pass++;
     }
     else
     {
-        cout << "FAIL! \t: MYSIZE" << "\n\tActual " << MYSIZE << "\n\texpected 12" << endl;
+        cout << "FAIL! \t: GRIDSIZE" << "\n\tActual " << GRIDSIZE << "\n\texpected 12" << endl;
         failed++;
     }
     cout << "Totals: " << pass << " passed, " << failed << " failed" << endl;
-    cout << "********* Finished testing of const MYSIZE *********" << endl;
+    cout << "********* Finished testing of const GRIDSIZE *********" << endl;
 
     cout << endl;
     pass = 0;
@@ -422,11 +422,11 @@ void test_checkCoordinate()
     cout << "********* Finished testing of checkCoordinate *********" << endl;
 }
 
-void initGrid(Cell aGrid[][MYSIZE])
+void initGrid(Cell aGrid[][GRIDSIZE])
 {
-    for (int row = 0; row < MYSIZE; row++)
+    for (int row = 0; row < GRIDSIZE; row++)
     {
-        for (int column = 0; column < MYSIZE; column++)
+        for (int column = 0; column < GRIDSIZE; column++)
         {
             aGrid[row][column].ship = NONE;
             aGrid[row][column].state = UNSHOT;
@@ -434,11 +434,11 @@ void initGrid(Cell aGrid[][MYSIZE])
     }
 }
 
-bool compareGrid(Cell aGrid1[][MYSIZE], Cell AGrid2[][MYSIZE])
+bool compareGrid(Cell aGrid1[][GRIDSIZE], Cell AGrid2[][GRIDSIZE])
 {
-    for (int i=0; i<MYSIZE; i++)
+    for (int i=0; i<GRIDSIZE; i++)
     {
-        for (int j=0; j<MYSIZE; j++)
+        for (int j=0; j<GRIDSIZE; j++)
         {
             if (aGrid1[i][j].state != AGrid2[i][j].state or aGrid1[i][j].ship != AGrid2[i][j].ship)
             {
@@ -453,8 +453,8 @@ void test_initializeGrid()
 {
     int pass = 0;
     int failed = 0;
-    Cell grid[MYSIZE][MYSIZE];
-    Cell output[MYSIZE][MYSIZE];
+    Cell grid[GRIDSIZE][GRIDSIZE];
+    Cell output[GRIDSIZE][GRIDSIZE];
     cout << "********* Start testing of initializeGrid *********" << endl;
     initializeGrid(grid);
     initGrid(output);
@@ -476,8 +476,8 @@ void test_placeShip()
 {
     int pass = 0;
     int failed = 0;
-    Cell grid[MYSIZE][MYSIZE];
-    Cell output[MYSIZE][MYSIZE];
+    Cell grid[GRIDSIZE][GRIDSIZE];
+    Cell output[GRIDSIZE][GRIDSIZE];
     Placement position;
     Ship boat;
     cout << "********* Start testing of placeShip *********" << endl;
@@ -628,7 +628,7 @@ void test_placeShip()
         cout << "FAIL! \t: J9 TORPEDO R (orientation fausse)" << "\n\tActual true \n\texpected false " << endl;
         failed++;
     }
-    // Débordement horizontal
+    // Debordement horizontal
     initGrid(grid);
     position.coordi.col = 'I';
     position.coordi.row = 8;
@@ -636,15 +636,15 @@ void test_placeShip()
     boat = SUBMARINE;
     if (placeShip(grid, position, boat) == false)
     {
-        cout << "PASS \t: I8 SUBMARINE H (débordement H)" << endl;
+        cout << "PASS \t: I8 SUBMARINE H (debordement H)" << endl;
         pass++;
     }
     else
     {
-        cout << "FAIL! \t: I8 SUBMARINE H (débordement H)" << "\n\tActual true \n\texpected false " << endl;
+        cout << "FAIL! \t: I8 SUBMARINE H (debordement H)" << "\n\tActual true \n\texpected false " << endl;
         failed++;
     }
-    // Débordement vertical
+    // Debordement vertical
     initGrid(grid);
     position.coordi.col = 'E';
     position.coordi.row = 9;
@@ -652,12 +652,12 @@ void test_placeShip()
     boat = DESTROYER;
     if (placeShip(grid, position, boat) == false)
     {
-        cout << "PASS \t: E9 DESTROYER V (débordement V)" << endl;
+        cout << "PASS \t: E9 DESTROYER V (debordement V)" << endl;
         pass++;
     }
     else
     {
-        cout << "FAIL! \t: E9 DESTROYER V (débordement V)" << "\n\tActual true \n\texpected false " << endl;
+        cout << "FAIL! \t: E9 DESTROYER V (debordement V)" << "\n\tActual true \n\texpected false " << endl;
         failed++;
     }
     // Chevauchement horizontal
@@ -694,7 +694,7 @@ void test_placeShip()
         cout << "FAIL! \t: F4 CARRIER V (chevauchement V)" << "\n\tActual true \n\texpected false " << endl;
         failed++;
     }
-    // Collé horizontal
+    // Colle horizontal
     initGrid(grid);
     position.coordi.col = 'D';
     position.coordi.row = 5;
@@ -703,15 +703,15 @@ void test_placeShip()
     boat = CRUISER;
     if (placeShip(grid, position, boat) == false)
     {
-        cout << "PASS \t: D5 CRUISER H (collé H)" << endl;
+        cout << "PASS \t: D5 CRUISER H (colle H)" << endl;
         pass++;
     }
     else
     {
-        cout << "FAIL! \t: D5 CRUISER H (collé H)" << "\n\tActual true \n\texpected false " << endl;
+        cout << "FAIL! \t: D5 CRUISER H (colle H)" << "\n\tActual true \n\texpected false " << endl;
         failed++;
     }
-    // Collé vertical
+    // Colle vertical
     initGrid(grid);
     position.coordi.col = 'F';
     position.coordi.row = 4;
@@ -720,15 +720,15 @@ void test_placeShip()
     boat = CARRIER;
     if (placeShip(grid, position, boat) == false)
     {
-        cout << "PASS \t: F4 CARRIER V (collé V)" << endl;
+        cout << "PASS \t: F4 CARRIER V (colle V)" << endl;
         pass++;
     }
     else
     {
-        cout << "FAIL! \t: F4 CARRIER V (collé V)" << "\n\tActual true \n\texpected false " << endl;
+        cout << "FAIL! \t: F4 CARRIER V (colle V)" << "\n\tActual true \n\texpected false " << endl;
         failed++;
     }
-    // Collé diagonale
+    // Colle diagonale
     initGrid(grid);
     position.coordi.col = 'H';
     position.coordi.row = 6;
@@ -737,12 +737,12 @@ void test_placeShip()
     boat = SUBMARINE;
     if (placeShip(grid, position, boat) == false)
     {
-        cout << "PASS \t: F4 CARRIER V (collé diagonale)" << endl;
+        cout << "PASS \t: F4 CARRIER V (colle diagonale)" << endl;
         pass++;
     }
     else
     {
-        cout << "FAIL! \t: F4 CARRIER V (collé diagonale)" << "\n\tActual true \n\texpected false " << endl;
+        cout << "FAIL! \t: F4 CARRIER V (colle diagonale)" << "\n\tActual true \n\texpected false " << endl;
         failed++;
     }
     cout << "Totals: " << pass << " passed, " << failed << " failed" << endl;
@@ -753,7 +753,7 @@ void test_aleadyShot()
 {
     int pass = 0;
     int failed = 0;
-    Cell grid[MYSIZE][MYSIZE];
+    Cell grid[GRIDSIZE][GRIDSIZE];
     Coordinate coordinate;
     cout << "********* Start testing of aleadyShot *********" << endl;
     // G8 true HIT
@@ -763,12 +763,12 @@ void test_aleadyShot()
     grid[8][7].state = HIT;
     if (alreadyShot(grid, coordinate) == true)
     {
-        cout << "PASS \t: Tir déjà effectué en G8 (HIT)" << endl;
+        cout << "PASS \t: Tir dejà effectue en G8 (HIT)" << endl;
         pass++;
     }
     else
     {
-        cout << "FAIL! \t: Tir déjà effectué en G8 (HIT)" << "\n\tActual false \n\texpected true" << endl;
+        cout << "FAIL! \t: Tir dejà effectue en G8 (HIT)" << "\n\tActual false \n\texpected true" << endl;
         failed++;
     }
     // G7 true MISS
@@ -778,12 +778,12 @@ void test_aleadyShot()
     grid[7][7].state = MISS;
     if (alreadyShot(grid, coordinate) == true)
     {
-        cout << "PASS \t: Tir déjà effectué en G7 (MISS)" << endl;
+        cout << "PASS \t: Tir dejà effectue en G7 (MISS)" << endl;
         pass++;
     }
     else
     {
-        cout << "FAIL! \t: Tir déjà effectué en G7 (MISS)" << "\n\tActual false \n\texpected true" << endl;
+        cout << "FAIL! \t: Tir dejà effectue en G7 (MISS)" << "\n\tActual false \n\texpected true" << endl;
         failed++;
     }
     // G6 true SINK
@@ -793,12 +793,12 @@ void test_aleadyShot()
     grid[6][7].state = SINK;
     if (alreadyShot(grid, coordinate) == true)
     {
-        cout << "PASS \t: Tir déjà effectué en G6 (SINK)" << endl;
+        cout << "PASS \t: Tir dejà effectue en G6 (SINK)" << endl;
         pass++;
     }
     else
     {
-        cout << "FAIL! \t: Tir déjà effectué en G6 (SINK)" << "\n\tActual false \n\texpected true" << endl;
+        cout << "FAIL! \t: Tir dejà effectue en G6 (SINK)" << "\n\tActual false \n\texpected true" << endl;
         failed++;
     }
     // B10 false
@@ -823,7 +823,7 @@ void test_hitOrMiss()
 {
     int pass = 0;
     int failed = 0;
-    Cell grid[MYSIZE][MYSIZE];
+    Cell grid[GRIDSIZE][GRIDSIZE];
     Coordinate coordinate;
     cout << "********* Start testing of hitOrMiss *********" << endl;
     // C7 Hit
@@ -833,12 +833,12 @@ void test_hitOrMiss()
     grid[7][3].ship = TORPEDO;
     if (hitOrMiss(grid, coordinate) == true)
     {
-        cout << "PASS \t: Tir en C7 touché" << endl;
+        cout << "PASS \t: Tir en C7 touche" << endl;
         pass++;
     }
     else
     {
-        cout << "FAIL! \t: Tir en C7 touché" << "\n\tActual false \n\texpected true" << endl;
+        cout << "FAIL! \t: Tir en C7 touche" << "\n\tActual false \n\texpected true" << endl;
         failed++;
     }
     // C7 HIT grid
@@ -849,12 +849,12 @@ void test_hitOrMiss()
     hitOrMiss(grid, coordinate);
     if (grid[7][3].state == HIT)
     {
-        cout << "PASS \t: Tir en C7 HIT enregistré dans la grille" << endl;
+        cout << "PASS \t: Tir en C7 HIT enregistre dans la grille" << endl;
         pass++;
     }
     else
     {
-        cout << "FAIL! \t: Tir en C7 HIT enregistré dans la grille" << "\n\tActual " << grid[7][3].state << "\n\texpected HIT (" << HIT << ")" << endl;
+        cout << "FAIL! \t: Tir en C7 HIT enregistre dans la grille" << "\n\tActual " << grid[7][3].state << "\n\texpected HIT (" << HIT << ")" << endl;
         failed++;
     }
     // F1 Miss
@@ -878,12 +878,12 @@ void test_hitOrMiss()
     hitOrMiss(grid, coordinate);
     if (grid[1][6].state == MISS)
     {
-        cout << "PASS \t: Tir en F1 MISS enregistré dans la grille" << endl;
+        cout << "PASS \t: Tir en F1 MISS enregistre dans la grille" << endl;
         pass++;
     }
     else
     {
-        cout << "FAIL! \t: Tir en F1 MISS enregistré dans la grille" << "\n\tActual " << grid[1][6].state << "\n\texpected MISS (" << MISS << ")" << endl;
+        cout << "FAIL! \t: Tir en F1 MISS enregistre dans la grille" << "\n\tActual " << grid[1][6].state << "\n\texpected MISS (" << MISS << ")" << endl;
         failed++;
     }
     cout << "Totals: " << pass << " passed, " << failed << " failed" << endl;
@@ -894,7 +894,7 @@ void test_isBoatSank()
 {
     int pass = 0;
     int failed = 0;
-    Cell grid[MYSIZE][MYSIZE];
+    Cell grid[GRIDSIZE][GRIDSIZE];
     int row;
     int column;
     cout << "********* Start testing of isBoatSank *********" << endl;
@@ -912,12 +912,12 @@ void test_isBoatSank()
     grid[4][5].state = HIT;
     if (isBoatSank(grid, row, column))
     {
-        cout << "PASS \t: Tir en F3 CRUISER coulé" << endl;
+        cout << "PASS \t: Tir en F3 CRUISER coule" << endl;
         pass++;
     }
     else
     {
-        cout << "FAIL! \t: Tir en F3 CRUISER coulé" << "\n\tActual false\n\texpected true" << endl;
+        cout << "FAIL! \t: Tir en F3 CRUISER coule" << "\n\tActual false\n\texpected true" << endl;
         failed++;
     }
     // CRUISER SANK F1
@@ -934,12 +934,12 @@ void test_isBoatSank()
     grid[4][5].state = HIT;
     if (isBoatSank(grid, row, column))
     {
-        cout << "PASS \t: Tir en F1 CRUISER coulé" << endl;
+        cout << "PASS \t: Tir en F1 CRUISER coule" << endl;
         pass++;
     }
     else
     {
-        cout << "FAIL! \t: Tir en F1 CRUISER coulé" << "\n\tActual false\n\texpected true" << endl;
+        cout << "FAIL! \t: Tir en F1 CRUISER coule" << "\n\tActual false\n\texpected true" << endl;
         failed++;
     }
     // TORPEDO HIT
@@ -950,12 +950,12 @@ void test_isBoatSank()
     grid[7][3].state = HIT;
     if (!isBoatSank(grid, row, column))
     {
-        cout << "PASS \t: Tir en C7 TORPEDO touché" << endl;
+        cout << "PASS \t: Tir en C7 TORPEDO touche" << endl;
         pass++;
     }
     else
     {
-        cout << "FAIL! \t: Tir en C7 TORPEDO touché" << "\n\tActual true\n\texpected false" << endl;
+        cout << "FAIL! \t: Tir en C7 TORPEDO touche" << "\n\tActual true\n\texpected false" << endl;
         failed++;
     }
     // Confusion SUBMARINE DESTROYER

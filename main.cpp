@@ -38,21 +38,32 @@ int main() {
     if (tests == 1){
         clearScreen();
         test_structureDonnees();
-        std::cout << std::endl;
+        std::cout << "Press enter to continue.";
+        cin.get();
+        clearScreen();
         test_checkCoordinate();
-        std::cout << std::endl;
+        std::cout << "Press enter to continue.";
+        cin.get();
+        clearScreen();
         test_initializeGrid();
-        std::cout << std::endl;
+        std::cout << "Press enter to continue.";
+        cin.get();
+        clearScreen();
         test_placeShip();
-        std::cout << std::endl;
+        std::cout << "Press enter to continue.";
+        cin.get();
+        clearScreen();
         test_aleadyShot();
-        std::cout << std::endl;
+        std::cout << "Press enter to continue.";
+        cin.get();
+        clearScreen();
         test_hitOrMiss();
-        std::cout << std::endl;
+        std::cout << "Press enter to continue.";
+        cin.get();
+        clearScreen();
         test_isBoatSank();
-        std::cout << std::endl;
-        std::cout << "Press enter to continu" << std::endl;
-        std::cin.get();
+        std::cout << "Press enter to continue.";
+        cin.get();
     }
 
     // ask if there is one or two player and the difficulty of the AI if there is only one player
@@ -76,7 +87,7 @@ int main() {
     initializeGrid(player1.grid);
     initializeGrid(player2.grid);
     player1.score = 0;
-    player2.score = 1;
+    player2.score = 0;
     int playerIndice = randomIntBetween(0, 1);
     int shotLeft = 3;
     bool AIFound = false;

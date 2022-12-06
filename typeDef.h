@@ -23,14 +23,17 @@
 
 using namespace std;
 
-//la dimension de la grille de jeu 10+2 pour détection du navire voisin
-const int MYSIZE = 12 ;
+//la dimension de la grille de jeu 10+2 pour detection du navire voisin
+const int GRIDSIZE = 12 ;
 
 // le nombre de navires de guerre
 const int NBSHIPS = 5;
 
-// le nombre de cases occupées par les navires d'un joueur (score)
+// le nombre de cases occupees par les navires d'un joueur (score)
 const int NBCELLS = 17;
+
+// The maximun size of a ship
+const int MAXSHIPSIZE = 5;
 
 // les navires de guerre disponibles et leur taille sur la grille
 enum Ship
@@ -41,12 +44,12 @@ enum Ship
     SUBMARINE=3,
     TORPEDO=2,
     NONE=0
-}; //numéro = nb cases
+}; //numero = nb cases
 
 // les noms des navires de guerre
 const string ships[NBSHIPS] = {"carrier", "cruiser", "destroyer", "submarine", "torpedo"};
 
-// les différents états que peut prendre une case de la grille et leur affichage
+// les differents etats que peut prendre une case de la grille et leur affichage
 enum State
 {
     HIT='x',
@@ -56,8 +59,8 @@ enum State
 };
 
 // une case de la grille
-// le navire présent sur la case
-// l’état de la case
+// le navire present sur la case
+// l’etat de la case
 struct Cell
 {
     Ship ship;
@@ -66,16 +69,16 @@ struct Cell
 
 // le joueur avec
 // son nom
-// son score pour déterminer qui a perdu
+// son score pour determiner qui a perdu
 // sa grille de jeu
 struct Player
 {
     std::string name;
     int score;
-    Cell grid[MYSIZE][MYSIZE];
+    Cell grid[GRIDSIZE][GRIDSIZE];
 };
 
-// les coordonnées de la case sur la grille
+// les coordonnees de la case sur la grille
 // sa ligne de 1 à 10
 // sa colonne de ‘A’ à ‘J’ (lettre en MAJ)
 struct Coordinate
@@ -85,8 +88,8 @@ struct Coordinate
 };
 
 // le placement du navire sur la grille
-// sa coordonnée (E5)
-// sa direction ‘H’ horizontal ou ‘V’ vertical depuis la coordonnée
+// sa coordonnee (E5)
+// sa direction ‘H’ horizontal ou ‘V’ vertical depuis la coordonnee
 struct Placement
 {
     Coordinate coordi;

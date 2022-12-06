@@ -111,10 +111,10 @@ void askPlayersNames(Player& aPlayer, Player& anOpponent){
     askPlayerName(anOpponent);
 }
 
-void initializeGrid(Cell aGrid[][MYSIZE]){
+void initializeGrid(Cell aGrid[][GRIDSIZE]){
     // travel the 2d grid
-    for (int iRow = 0; iRow < MYSIZE; iRow++){
-        for (int iCol = 0; iCol < MYSIZE; iCol++){
+    for (int iRow = 0; iRow < GRIDSIZE; iRow++){
+        for (int iCol = 0; iCol < GRIDSIZE; iCol++){
             // set the cell at ship = none and state = unshot
             aGrid[iRow][iCol] = {NONE, UNSHOT} ;
         }
@@ -136,14 +136,14 @@ void displayGrid(Player& aPlayer, Player& anOpponent) {
     }
     std::cout << std::endl;
     // display the grids and the index (1, 2, 3, ...) for the two players by concatenating players lines
-    for (int iRow = 1; iRow < MYSIZE-1; iRow++){
+    for (int iRow = 1; iRow < GRIDSIZE-1; iRow++){
         if (iRow < 10){
             std::cout << " " << iRow << " ";
         }
         else {
             std::cout << iRow << " ";
         }
-        for (int iCol = 1; iCol < MYSIZE-1; iCol++){
+        for (int iCol = 1; iCol < GRIDSIZE-1; iCol++){
             Ship playerShip = aPlayer.grid[iRow][iCol].ship;
             State state = aPlayer.grid[iRow][iCol].state;
             if (playerShip != NONE){
@@ -212,7 +212,7 @@ void displayGrid(Player& aPlayer, Player& anOpponent) {
         else {
             std::cout << iRow << " ";
         }
-        for (int iCol = 1; iCol < MYSIZE-1; iCol++){
+        for (int iCol = 1; iCol < GRIDSIZE-1; iCol++){
             State state = anOpponent.grid[iRow][iCol].state;
             switch (state) {
             case UNSHOT:
@@ -267,7 +267,7 @@ void displayGrid(Player& aPlayer, Player& anOpponent) {
 
 bool isGoodLetter(char aLetter){
     // verrify if the letter entered by the player is good for coordinates
-    if ((aLetter >= 'a' and aLetter < 'a'+MYSIZE-2) or (aLetter >= 'A' and aLetter < 'A'+MYSIZE-2)){
+    if ((aLetter >= 'a' and aLetter < 'a'+GRIDSIZE-2) or (aLetter >= 'A' and aLetter < 'A'+GRIDSIZE-2)){
         return true;
     }
     else{
@@ -313,7 +313,7 @@ bool checkCoordinate(std::string aPlace, Coordinate& sommeCoordi){
         }
         number = (aPlace[1]-48);
     }
-    if (number < 1 or number > MYSIZE-2){
+    if (number < 1 or number > GRIDSIZE-2){
 
         return false;
     }
@@ -351,19 +351,19 @@ int randomIntBetween(int min, int max){
     return number;
 }
 
-bool checkDirection(Cell grid[][MYSIZE], Ship ship, Coordinate coord, char dir){
+bool checkDirection(Cell grid[][GRIDSIZE], Ship ship, Coordinate coord, char dir){
     int row = coord.row;
     int col = coord.col+1 - 'A';
-    if (row < 0 or row > MYSIZE-2 or col < 0 or col > MYSIZE-2){
+    if (row < 0 or row > GRIDSIZE-2 or col < 0 or col > GRIDSIZE-2){
         return false;
     }
     if (dir == 'h' or dir == 'H'){
         for (int decalX = -1; decalX < ship+2; decalX++){
             for (int decalY = -1; decalY < 2; decalY++){
-                if (col+decalX < 0 or col+decalX > MYSIZE-1){
+                if (col+decalX < 0 or col+decalX > GRIDSIZE-1){
                     return false;
                 }
-                if (row+decalY < 0 or row+decalY > MYSIZE-1){
+                if (row+decalY < 0 or row+decalY > GRIDSIZE-1){
                     return false;
                 }
                 if (grid[row+decalY][col+decalX].ship != NONE){
@@ -376,10 +376,10 @@ bool checkDirection(Cell grid[][MYSIZE], Ship ship, Coordinate coord, char dir){
     if (dir == 'v' or dir == 'V'){
         for (int decalX = -1; decalX < 2; decalX++){
             for (int decalY = -1; decalY < ship+2; decalY++){
-                if (col+decalX < 0 or col+decalX > MYSIZE-1){
+                if (col+decalX < 0 or col+decalX > GRIDSIZE-1){
                     return false;
                 }
-                if (row+decalY < 0 or row+decalY > MYSIZE){
+                if (row+decalY < 0 or row+decalY > GRIDSIZE){
                     return false;
                 }
                 if (grid[row+decalY][col+decalX].ship != NONE){
@@ -392,7 +392,7 @@ bool checkDirection(Cell grid[][MYSIZE], Ship ship, Coordinate coord, char dir){
     return false;
 }
 
-bool placeShip(Cell grid[][MYSIZE], Placement place, Ship ship){
+bool placeShip(Cell grid[][GRIDSIZE], Placement place, Ship ship){
     if (checkDirection(grid, ship, place.coordi, place.dir) == true){
         int col = place.coordi.col - 'A';
         int row = place.coordi.row;
@@ -455,14 +455,14 @@ void askPlayerToPlace(Player & aPlayer, Player & anOpponent){
             place = {coordi, dir};
             error = placeShip(aPlayer.grid, place, nbShipToShip(nbShip));
             if (!error){
-                std::cout << "Placement impossible veulliez entrer des coordonées et une direction valide" << std::endl;
+                std::cout << "Placement impossible veulliez entrer des coordonees et une direction valide" << std::endl;
             }
         }
 
     }
 }
 
-bool alreadyShot(Cell aGrid[][MYSIZE], Coordinate someCoordi){
+bool alreadyShot(Cell aGrid[][GRIDSIZE], Coordinate someCoordi){
     int row = someCoordi.row;
     int col = someCoordi.col - 'A' +1;
     if (aGrid[row][col].state == UNSHOT){
@@ -471,7 +471,7 @@ bool alreadyShot(Cell aGrid[][MYSIZE], Coordinate someCoordi){
     return true;
 }
 
-bool hitOrMiss(Cell aGrid[][MYSIZE], Coordinate someCoordi){
+bool hitOrMiss(Cell aGrid[][GRIDSIZE], Coordinate someCoordi){
     int row = someCoordi.row;
     int col = someCoordi.col - 'A';
     if (aGrid[row][col+1].ship == NONE)
@@ -485,7 +485,7 @@ bool hitOrMiss(Cell aGrid[][MYSIZE], Coordinate someCoordi){
     }
 }
 
-bool isBoatSank(Cell aGrid[][MYSIZE], int aRow, int aCol){
+bool isBoatSank(Cell aGrid[][GRIDSIZE], int aRow, int aCol){
     int found = 1;
     int x = aCol;
     int y = aRow;
@@ -493,7 +493,7 @@ bool isBoatSank(Cell aGrid[][MYSIZE], int aRow, int aCol){
     int decalX = 0;
     int decalY = 0;
     Ship ship = aGrid[aRow][aCol].ship;
-    int shipCoordi[ship][2] = {{x,y}};
+    int shipCoordi[MAXSHIPSIZE][2] = {{x,y}};
     State state = aGrid[aRow][aCol].state;
     if (ship == NONE or state == MISS){
         return false;
@@ -519,7 +519,7 @@ bool isBoatSank(Cell aGrid[][MYSIZE], int aRow, int aCol){
     }
     while (found != ship){
         if (dir == 'H'){
-            if (x+decalX > 0 and x+decalX < MYSIZE and aGrid[y][x+decalX].ship == ship){
+            if (x+decalX > 0 and x+decalX < GRIDSIZE and aGrid[y][x+decalX].ship == ship){
                 if (aGrid[y][x+decalX].state != HIT){
                     return false;
                 }
@@ -536,7 +536,7 @@ bool isBoatSank(Cell aGrid[][MYSIZE], int aRow, int aCol){
             }
         }
         if (dir == 'h'){
-            if (x+decalX > 0 and x+decalX < MYSIZE and aGrid[y][x+decalX].ship == ship){
+            if (x+decalX > 0 and x+decalX < GRIDSIZE and aGrid[y][x+decalX].ship == ship){
                 if (aGrid[y][x+decalX].state != HIT){
                     return false;
                 }
@@ -553,7 +553,7 @@ bool isBoatSank(Cell aGrid[][MYSIZE], int aRow, int aCol){
             }
         }
         if (dir == 'V'){
-            if (y+decalY > 0 and y+decalY < MYSIZE and aGrid[y+decalY][x].ship == ship){
+            if (y+decalY > 0 and y+decalY < GRIDSIZE and aGrid[y+decalY][x].ship == ship){
                 if (aGrid[y+decalY][x].state != HIT){
                     return false;
                 }
@@ -570,7 +570,7 @@ bool isBoatSank(Cell aGrid[][MYSIZE], int aRow, int aCol){
             }
         }
         if (dir == 'v'){
-            if (y+decalY > 0 and y+decalY < MYSIZE and aGrid[y+decalY][x].ship == ship){
+            if (y+decalY > 0 and y+decalY < GRIDSIZE and aGrid[y+decalY][x].ship == ship){
                 if (aGrid[y+decalY][x].state != HIT){
                     return false;
                 }
@@ -604,8 +604,8 @@ void randomPlacement(Player& aPlayer){
     for (int nbShip = 0; nbShip < NBSHIPS; nbShip++){
         error = false;
         while (!error){
-            coordi.row = randomIntBetween(1, MYSIZE-2);
-            coordi.col = randomIntBetween(1, MYSIZE-2)+'A'-1;
+            coordi.row = randomIntBetween(1, GRIDSIZE-2);
+            coordi.col = randomIntBetween(1, GRIDSIZE-2)+'A'-1;
             dir = randomIntBetween(0,1)==0? 'H':'V';
             place = {coordi, dir};
             error = placeShip(aPlayer.grid, place, nbShipToShip(nbShip));
@@ -695,30 +695,31 @@ void askPlayerToShot(Player& aPlayer, Player& anOpponent){
     displayTitle();
     displayPlayerNames(aPlayer, anOpponent);
     displayGrid(aPlayer, anOpponent);
-    std::cout << aPlayer.name << " ou voulez-vous tirer ? (exemple C6): ";
+    std::cout << std::endl;
+    std::cout << aPlayer.name << " where do you want to shoot ? (example C6): ";
     while(!(std::cin >> inputCoordi) or !checkCoordinate(inputCoordi, coordi) or alreadyShot(anOpponent.grid, coordi)
           ){
         std::cin.clear();
         std::cin.ignore();
-        std::cout << "Coordonnees invalides." << std::endl;
-        std::cout << aPlayer.name << " ou voulez-vous tirer ? (exemple C6): ";
+        std::cout << "Invalid coordinates." << std::endl;
+        std::cout << aPlayer.name << " where do you want to shoot ? (example C6): ";
     }
     clearScreen();
     displayTitle();
     displayPlayerNames(aPlayer, anOpponent);
     displayGrid(aPlayer, anOpponent);
-    std::cout << aPlayer.name << " tir en" << inputCoordi << std::endl;
+    std::cout << aPlayer.name << " shoot on " << inputCoordi << std::endl << std::endl;
     if (hitOrMiss(anOpponent.grid, coordi)){
         if (isBoatSank(anOpponent.grid, coordi.row, coordi.col-'A'+1)){
-            std::cout << "Navire coule" << std::endl;
+            std::cout << "Ship sank" << std::endl;
             aPlayer.score++;
         }
         else{
-            std::cout << "Navire touche" << std::endl;
+            std::cout << "Ship hit" << std::endl;
         }
     }
     else{
-        std::cout << "Plouf" << std::endl;
+        std::cout << "Miss" << std::endl;
     }
 }
 
