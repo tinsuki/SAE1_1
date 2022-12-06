@@ -14,6 +14,7 @@ void AIRandomShoot(Cell aGrid[][MYSIZE], Player anAI){
         y = randomIntBetween(1, MYSIZE-1);
         coordi = {x, y};
     }
+    std::cout << "AI shot in " << x << y << std::endl;
     if (hitOrMiss(aGrid, coordi)){
         if (isBoatSank(aGrid, y, x-'A'+1)){
             std::cout << "Navire coule" << std::endl;

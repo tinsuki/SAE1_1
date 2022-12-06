@@ -145,8 +145,8 @@ void displayGrid(Player& aPlayer, Player& anOpponent) {
         }
         for (int iCol = 1; iCol < MYSIZE-1; iCol++){
             Ship playerShip = aPlayer.grid[iRow][iCol].ship;
+            State state = aPlayer.grid[iRow][iCol].state;
             if (playerShip != NONE){
-                State state = aPlayer.grid[iRow][iCol].state;
                 switch (state) {
                 case UNSHOT:
                     #ifdef __WIN32
@@ -195,7 +195,7 @@ void displayGrid(Player& aPlayer, Player& anOpponent) {
             else{
             #ifdef __WIN32
             SetConsoleTextAttribute(hConsole,FOREGROUND_BLUE);
-            std::cout << playerShip << "  ";
+            std::cout << char(state) << "  ";
             SetConsoleTextAttribute(hConsole,FOREGROUND_GREEN | FOREGROUND_BLUE | FOREGROUND_RED);
             #endif
             #ifndef __WIN32
