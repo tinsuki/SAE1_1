@@ -94,8 +94,15 @@ int main() {
     player1.score = 0;
     player2.score = 1;
     int playerIndice = randomIntBetween(0, 1);
-    Player playerList[2] = {player1, player2};
     int shotLeft = 3;
+    bool AIFound = false;
+    char AIDir = 'N';
+    char AIPreviousX = 'A'-1;
+    int AIPreviousY = -1;
+    char AIOriX = 'A'-1;
+    int AIOriY = -1;
+    char AICurrentX = 'A'-1;
+    int AICurrentY = -1;
     if (playingMode == 1){
         askPlayersNames(player1, player2);
         clearScreen();
@@ -146,26 +153,16 @@ int main() {
         askPlayerToPlace(player1, player2);
         randomPlacement(player2);
     }
-    if (playingMode > 2){
-        player2.name = "AI";
-        bool AIFound = false;
-        char AIDir = 'N';
-        char AIPreviousX = 'A'-1;
-        int AIPreviousY = -1;
-        char AIOriX = 'A'-1;
-        int AIOriY = -1;
-    }
-    if (playingMode == 4){
-        char AICurrentX = 'A'-1;
-        int AICurrentY = -1;
-    }
-    if (shootMode == 2){
-        int shotLeft = 3;
-    }
-    clearScreen();
+    Player playerList[2] = {player1, player2};
     displayTitle();
-    std::cout << std::endl << std::endl << "The first player is " << playerList[0+playerIndice].name << std::endl;
+    std::cout << std::endl << std::endl << "The first player is " << playerList[playerIndice].name << std::endl;
+    std::cout << "Press Enter to continu." << std::endl;
+    std::cin.clear();
+    std::cin.ignore();
+    std::cin.get();
+    clearScreen();
     do{
+        clearScreen();
         switch (playingMode) {
         case 1:
             askPlayerToShot(playerList[playerIndice], playerList[1-playerIndice]);
@@ -180,9 +177,73 @@ int main() {
                 playerIndice = 1 - playerIndice;
             }
             break;
+        case 2:
+            if (playerList[playerIndice].name != "AI"){
+                askPlayerToShot(playerList[playerIndice], playerList[1-playerIndice]);
+            }
+            else {
+                AIRandomShoot(playerList[1-playerIndice].grid, playerList[playerIndice]);
+            }
+            if (shootMode == 2){
+                shotLeft -= 1;
+                if (shotLeft < 1){
+                    shotLeft = 3;
+                    playerIndice = 1 - playerIndice;
+                }
+            }
+            else {
+                playerIndice = 1 - playerIndice;
+            }
+            break;
+        case 3:
+             if (playerList[playerIndice].name != "AI"){
+                askPlayerToShot(playerList[playerIndice], playerList[1-playerIndice]);
+            }
+            else {
+                AIOptimisedShoot(playerList[playerIndice], playerList[1-playerIndice].grid, AIFound, AIDir, AIPreviousX, AIPreviousY, AIOriX, AIOriY);
+            }
+            if (shootMode == 2){
+                shotLeft -= 1;
+                if (shotLeft < 1){
+                    shotLeft = 3;
+                    playerIndice = 1 - playerIndice;
+                }
+            }
+            else {
+                playerIndice = 1 - playerIndice;
+            }
+            break;
+        case 4:
+             if (playerList[playerIndice].name != "AI"){
+                askPlayerToShot(playerList[playerIndice], playerList[1-playerIndice]);
+            }
+            else {
+                AICrossShoot(playerList[playerIndice], playerList[1-playerIndice].grid, AICurrentX, AICurrentY, AIFound, AIDir, AIPreviousX, AIPreviousY, AIOriX, AIOriY);
+            }
+            if (shootMode == 2){
+                shotLeft -= 1;
+                if (shotLeft < 1){
+                    shotLeft = 3;
+                    playerIndice = 1 - playerIndice;
+                }
+            }
+            else {
+                playerIndice = 1 - playerIndice;
+            }
+            break;
         default:
             break;
         }
-    }while (player1.score < NBSHIPS && player2.score < NBSHIPS);
+        std::cout << "Press Enter to continu." << std::endl;
+        std::cin.clear();
+        std::cin.ignore();
+        std::cin.get();
+    }while ((playerList[0].score < NBSHIPS+1) and (playerList[1].score < NBSHIPS+1));
+    if (playerList[0].score == NBSHIPS-1) {
+        displayWin(playerList[0]);
+    }
+    else{
+        displayWin(playerList[1]);
+    }
     return 0;
 }

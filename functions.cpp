@@ -267,7 +267,7 @@ void displayGrid(Player& aPlayer, Player& anOpponent) {
 
 bool isGoodLetter(char aLetter){
     // verrify if the letter entered by the player is good for coordinates
-    if ((aLetter >= 'a' and aLetter <= 'a'+MYSIZE-2) or (aLetter >= 'A' and aLetter <= 'A'+MYSIZE-2)){
+    if ((aLetter >= 'a' and aLetter < 'a'+MYSIZE-2) or (aLetter >= 'A' and aLetter < 'A'+MYSIZE-2)){
         return true;
     }
     else{
@@ -313,7 +313,7 @@ bool checkCoordinate(std::string aPlace, Coordinate& sommeCoordi){
         }
         number = (aPlace[1]-48);
     }
-    if (number < 0 or number > MYSIZE-2){
+    if (number < 1 or number > MYSIZE-2){
 
         return false;
     }
@@ -440,6 +440,8 @@ void askPlayerToPlace(Player & aPlayer, Player & anOpponent){
     bool error = false;
     for (int nbShip = 0; nbShip < NBSHIPS; nbShip++){
         clearScreen();
+        displayTitle();
+        displayPlayerNames(aPlayer, anOpponent);
         displayGrid(aPlayer, anOpponent);
         error = false;
         while (!error){
@@ -602,8 +604,8 @@ void randomPlacement(Player& aPlayer){
     for (int nbShip = 0; nbShip < NBSHIPS; nbShip++){
         error = false;
         while (!error){
-            coordi.row = randomIntBetween(1, MYSIZE-1);
-            coordi.col = randomIntBetween(1, MYSIZE-1)+'A'-1;
+            coordi.row = randomIntBetween(1, MYSIZE-2);
+            coordi.col = randomIntBetween(1, MYSIZE-2)+'A'-1;
             dir = randomIntBetween(0,1)==0? 'H':'V';
             place = {coordi, dir};
             error = placeShip(aPlayer.grid, place, nbShipToShip(nbShip));
@@ -694,7 +696,8 @@ void askPlayerToShot(Player& aPlayer, Player& anOpponent){
     displayPlayerNames(aPlayer, anOpponent);
     displayGrid(aPlayer, anOpponent);
     std::cout << aPlayer.name << " ou voulez-vous tirer ? (exemple C6): ";
-    while(!(std::cin >> inputCoordi) or !checkCoordinate(inputCoordi, coordi)){
+    while(!(std::cin >> inputCoordi) or !checkCoordinate(inputCoordi, coordi) or alreadyShot(anOpponent.grid, coordi)
+          ){
         std::cin.clear();
         std::cin.ignore();
         std::cout << "Coordonnees invalides." << std::endl;
@@ -751,4 +754,34 @@ void displayTestsMenu(){
     std::cout << std::endl;
     std::cout << std::endl;
     std::cout << "Enter youre answer here : ";
+}
+
+void displayWin(Player aPlayer){
+    #ifdef __WIN32
+    SetConsoleTextAttribute(hConsole,FOREGROUND_BLUE);
+    #endif
+    #ifndef __WIN32
+    std::cout << "\033[34m";
+    #endif
+    std::cout << "  888               888    888    888                   888      d8b" << std::endl;
+    std::cout << "  888               888    888    888                   888      Y8P" << std::endl;
+    std::cout << "  888               888    888    888                   888" << std::endl;
+    std::cout << "  88888b.   8888b.  888888 888888 888  .d88b.  .d8888b  88888b.  888 888888b." << std::endl;
+    std::cout << "  888 \"88b     \"88b 888    888    888 d8P  Y8b 88K      888 \"88b 888 8888 \"88b" << std::endl;
+    std::cout << "  888  888. d888888 888    888    888 88888888 \"Y8888b. 888  888 888 8888  888" << std::endl;
+    std::cout << "  888 d88P8 88  888 Y88b.  Y88b.  888 Y8b.          X88 888  888 888 8888 d88P" << std::endl;
+    std::cout << "  88888P\"\"  Y888888  \"Y888  \"Y888 888  \"Y8888  d88888P' 888  888 888 888888P\"" << std::endl;
+    std::cout << "                                                                     888" << std::endl;
+    std::cout << "                                                                     888" << std::endl;
+    std::cout << "                                                                     888" << std::endl;
+    std::cout << std::endl;
+    #ifdef __WIN32
+    SetConsoleTextAttribute(hConsole,FOREGROUND_BLUE | FOREGROUND_RED | FOREGROUND_GREEN);
+    #endif
+    #ifndef __WIN32
+    std::cout << "\033[0m";
+    #endif
+    centerDisplay("The Winner of the BattleShip is");
+    std::cout << std::endl;
+    centerDisplay(aPlayer.name);
 }

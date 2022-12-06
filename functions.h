@@ -176,4 +176,6 @@ void displayPlayingMenu();
 
 void displayTestsMenu();
 
+void displayWin(Player aPlayer);
+
 #endif // FUNCTIONS_H
