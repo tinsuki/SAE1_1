@@ -9,37 +9,6 @@
 #include "test.h"
 #include "AI.h"
 
-void game(){
-    int playingMode;
-    int shootMode;
-    titleScreen();
-    std::cin.get();
-    do{
-        std::cin.clear();
-        std::cin.ignore(numeric_limits<streamsize>::max(), '\n');
-        clearScreen();
-        displayPlayingMenu();
-    }while(!(std::cin >> playingMode) or playingMode < 1 or playingMode > 4);
-    do{
-        std::cin.clear();
-        std::cin.ignore(numeric_limits<streamsize>::max(), '\n');
-        clearScreen();
-        displayShootMenu();
-    }while(!(std::cin >> shootMode) or shootMode < 1 or shootMode > 2);
-    // initialize the ia
-    bool AIFound = false;
-    char AIDir = 'N';
-    char AIPreviousX = 'A'-1;
-    int AIPreviousY = -1;
-    char AIOriX = 'A'-1;
-    int AIOriY = -1;
-    char AICurrentX = 'A'-1;
-    int AICurrentY = -1;
-
-
-}
-
-
 int main() {
     if (OS == 0){ // test if the clearScreen function will work depending on the os
         std::cout << "votre systeme d'exploitation n'est pas pris en charge, ce jeu fonctionne sous \nwindows 32/64bits, linux ou mac" << std::endl;
@@ -238,8 +207,8 @@ int main() {
         std::cin.clear();
         std::cin.ignore();
         std::cin.get();
-    }while ((playerList[0].score < NBSHIPS+1) and (playerList[1].score < NBSHIPS+1));
-    if (playerList[0].score == NBSHIPS-1) {
+    }while ((playerList[0].score!= NBSHIPS+1) and (playerList[1].score != NBSHIPS+1));
+    if (playerList[0].score == NBSHIPS) {
         displayWin(playerList[0]);
     }
     else{
