@@ -68,6 +68,33 @@ void titleScreen(){
     std::cout << "  |________________________________________________________________________'" << std::endl;
 }
 
+void displayBattleShip(){
+    #ifdef __WIN32
+    SetConsoleTextAttribute(hConsole,FOREGROUND_BLUE);
+    #endif
+    #ifndef __WIN32
+    std::cout << "\033[34m";
+    #endif
+    std::cout << "  888               888    888    888                   888      d8b" << std::endl;
+    std::cout << "  888               888    888    888                   888      Y8P" << std::endl;
+    std::cout << "  888               888    888    888                   888" << std::endl;
+    std::cout << "  88888b.   8888b.  888888 888888 888  .d88b.  .d8888b  88888b.  888 888888b." << std::endl;
+    std::cout << "  888 \"88b     \"88b 888    888    888 d8P  Y8b 88K      888 \"88b 888 8888 \"88b" << std::endl;
+    std::cout << "  888  888. d888888 888    888    888 88888888 \"Y8888b. 888  888 888 8888  888" << std::endl;
+    std::cout << "  888 d88P8 88  888 Y88b.  Y88b.  888 Y8b.          X88 888  888 888 8888 d88P" << std::endl;
+    std::cout << "  88888P\"\"  Y888888  \"Y888  \"Y888 888  \"Y8888  d88888P' 888  888 888 888888P\"" << std::endl;
+    std::cout << "                                                                     888" << std::endl;
+    std::cout << "                                                                     888" << std::endl;
+    std::cout << "                                                                     888" << std::endl;
+    std::cout << std::endl;
+    #ifdef __WIN32
+    SetConsoleTextAttribute(hConsole,FOREGROUND_BLUE | FOREGROUND_RED | FOREGROUND_GREEN);
+    #endif
+    #ifndef __WIN32
+    std::cout << "\033[0m";
+    #endif
+}
+
 void displayPlayerNames(Player& player1, Player& player2){
     int nbSpaceP1 = 31 - player1.name.length();
     int nbSpaceP2 = 31 - player2.name.length();
@@ -622,30 +649,7 @@ void centerDisplay(std::string aText){
 }
 
 void displayPlayingMenu(){
-    #ifdef __WIN32
-    SetConsoleTextAttribute(hConsole,FOREGROUND_BLUE);
-    #endif
-    #ifndef __WIN32
-    std::cout << "\033[34m";
-    #endif
-    std::cout << "  888               888    888    888                   888      d8b" << std::endl;
-    std::cout << "  888               888    888    888                   888      Y8P" << std::endl;
-    std::cout << "  888               888    888    888                   888" << std::endl;
-    std::cout << "  88888b.   8888b.  888888 888888 888  .d88b.  .d8888b  88888b.  888 888888b." << std::endl;
-    std::cout << "  888 \"88b     \"88b 888    888    888 d8P  Y8b 88K      888 \"88b 888 8888 \"88b" << std::endl;
-    std::cout << "  888  888. d888888 888    888    888 88888888 \"Y8888b. 888  888 888 8888  888" << std::endl;
-    std::cout << "  888 d88P8 88  888 Y88b.  Y88b.  888 Y8b.          X88 888  888 888 8888 d88P" << std::endl;
-    std::cout << "  88888P\"\"  Y888888  \"Y888  \"Y888 888  \"Y8888  d88888P' 888  888 888 888888P\"" << std::endl;
-    std::cout << "                                                                     888" << std::endl;
-    std::cout << "                                                                     888" << std::endl;
-    std::cout << "                                                                     888" << std::endl;
-    std::cout << std::endl;
-    #ifdef __WIN32
-    SetConsoleTextAttribute(hConsole,FOREGROUND_BLUE | FOREGROUND_RED | FOREGROUND_GREEN);
-    #endif
-    #ifndef __WIN32
-    std::cout << "\033[0m";
-    #endif
+    displayBattleShip();
     centerDisplay("Playing Modes :");
     centerDisplay("1 - 2 Players");
     centerDisplay("2 - AI Easy mode");
@@ -656,30 +660,7 @@ void displayPlayingMenu(){
 }
 
 void displayShootMenu(){
-    #ifdef __WIN32
-    SetConsoleTextAttribute(hConsole,FOREGROUND_BLUE);
-    #endif
-    #ifndef __WIN32
-    std::cout << "\033[34m";
-    #endif
-    std::cout << "  888               888    888    888                   888      d8b" << std::endl;
-    std::cout << "  888               888    888    888                   888      Y8P" << std::endl;
-    std::cout << "  888               888    888    888                   888" << std::endl;
-    std::cout << "  88888b.   8888b.  888888 888888 888  .d88b.  .d8888b  88888b.  888 888888b." << std::endl;
-    std::cout << "  888 \"88b     \"88b 888    888    888 d8P  Y8b 88K      888 \"88b 888 8888 \"88b" << std::endl;
-    std::cout << "  888  888. d888888 888    888    888 88888888 \"Y8888b. 888  888 888 8888  888" << std::endl;
-    std::cout << "  888 d88P8 88  888 Y88b.  Y88b.  888 Y8b.          X88 888  888 888 8888 d88P" << std::endl;
-    std::cout << "  88888P\"\"  Y888888  \"Y888  \"Y888 888  \"Y8888  d88888P' 888  888 888 888888P\"" << std::endl;
-    std::cout << "                                                                     888" << std::endl;
-    std::cout << "                                                                     888" << std::endl;
-    std::cout << "                                                                     888" << std::endl;
-    std::cout << std::endl;
-    #ifdef __WIN32
-    SetConsoleTextAttribute(hConsole,FOREGROUND_BLUE | FOREGROUND_RED | FOREGROUND_GREEN);
-    #endif
-    #ifndef __WIN32
-    std::cout << "\033[0m";
-    #endif
+    displayBattleShip();
     centerDisplay("Shoot Modes :");
     centerDisplay("1 - One Shot");
     centerDisplay("2 - Three Shots in a row");
@@ -741,30 +722,7 @@ void askPlayerToShot(Player& aPlayer, Player& anOpponent){
 }
 
 void displayTestsMenu(){
-    #ifdef __WIN32
-    SetConsoleTextAttribute(hConsole,FOREGROUND_BLUE);
-    #endif
-    #ifndef __WIN32
-    std::cout << "\033[34m";
-    #endif
-    std::cout << "  888               888    888    888                   888      d8b" << std::endl;
-    std::cout << "  888               888    888    888                   888      Y8P" << std::endl;
-    std::cout << "  888               888    888    888                   888" << std::endl;
-    std::cout << "  88888b.   8888b.  888888 888888 888  .d88b.  .d8888b  88888b.  888 888888b." << std::endl;
-    std::cout << "  888 \"88b     \"88b 888    888    888 d8P  Y8b 88K      888 \"88b 888 8888 \"88b" << std::endl;
-    std::cout << "  888  888. d888888 888    888    888 88888888 \"Y8888b. 888  888 888 8888  888" << std::endl;
-    std::cout << "  888 d88P8 88  888 Y88b.  Y88b.  888 Y8b.          X88 888  888 888 8888 d88P" << std::endl;
-    std::cout << "  88888P\"\"  Y888888  \"Y888  \"Y888 888  \"Y8888  d88888P' 888  888 888 888888P\"" << std::endl;
-    std::cout << "                                                                     888" << std::endl;
-    std::cout << "                                                                     888" << std::endl;
-    std::cout << "                                                                     888" << std::endl;
-    std::cout << std::endl;
-    #ifdef __WIN32
-    SetConsoleTextAttribute(hConsole,FOREGROUND_BLUE | FOREGROUND_RED | FOREGROUND_GREEN);
-    #endif
-    #ifndef __WIN32
-    std::cout << "\033[0m";
-    #endif
+    displayBattleShip();
     centerDisplay("Do you want to execute the tests ? :");
     centerDisplay("1 - Yes");
     centerDisplay("2 - No");
@@ -775,31 +733,28 @@ void displayTestsMenu(){
 }
 
 void displayWin(Player aPlayer){
-    #ifdef __WIN32
-    SetConsoleTextAttribute(hConsole,FOREGROUND_BLUE);
-    #endif
-    #ifndef __WIN32
-    std::cout << "\033[34m";
-    #endif
-    std::cout << "  888               888    888    888                   888      d8b" << std::endl;
-    std::cout << "  888               888    888    888                   888      Y8P" << std::endl;
-    std::cout << "  888               888    888    888                   888" << std::endl;
-    std::cout << "  88888b.   8888b.  888888 888888 888  .d88b.  .d8888b  88888b.  888 888888b." << std::endl;
-    std::cout << "  888 \"88b     \"88b 888    888    888 d8P  Y8b 88K      888 \"88b 888 8888 \"88b" << std::endl;
-    std::cout << "  888  888. d888888 888    888    888 88888888 \"Y8888b. 888  888 888 8888  888" << std::endl;
-    std::cout << "  888 d88P8 88  888 Y88b.  Y88b.  888 Y8b.          X88 888  888 888 8888 d88P" << std::endl;
-    std::cout << "  88888P\"\"  Y888888  \"Y888  \"Y888 888  \"Y8888  d88888P' 888  888 888 888888P\"" << std::endl;
-    std::cout << "                                                                     888" << std::endl;
-    std::cout << "                                                                     888" << std::endl;
-    std::cout << "                                                                     888" << std::endl;
-    std::cout << std::endl;
-    #ifdef __WIN32
-    SetConsoleTextAttribute(hConsole,FOREGROUND_BLUE | FOREGROUND_RED | FOREGROUND_GREEN);
-    #endif
-    #ifndef __WIN32
-    std::cout << "\033[0m";
-    #endif
+    displayBattleShip();
     centerDisplay("The Winner of the BattleShip is");
     std::cout << std::endl;
     centerDisplay(aPlayer.name);
+}
+
+void displayRules(){
+    clearScreen();
+    displayBattleShip();
+    std::cout << "- You ave to place five ships of differents lengths (2, 3, 3, 4, 5)" << std::endl;
+    std::cout << "- Each ship have to be place horizontaly or verticaly in a grid (10x10)" << std::endl;
+    std::cout << "- You can not place two ships side by side" << std::endl;
+    std::cout << "- During your turn you have to shoot somewhere in the grid to sink all the opponents ships" << std::endl;
+    std::cout << "- The winner is the first to sink all the opponent ships" << std::endl;
+    std::cout << std::endl << "Press Enter to continue" << std::endl;
+}
+
+void displayRulesMenu(){
+    clearScreen();
+    displayBattleShip();
+    centerDisplay("Do you want to read the rules");
+    std::cout << std::endl;
+    centerDisplay("1 - Yes");
+    centerDisplay("2 - No");
 }

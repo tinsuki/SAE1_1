@@ -178,4 +178,10 @@ void displayTestsMenu();
 
 void displayWin(Player aPlayer);
 
+void displayBattleShip();
+
+void displayRules();
+
+void displayRulesMenu();
+
 #endif // FUNCTIONS_H

@@ -18,11 +18,27 @@ int main() {
     int playingMode;
     int shootMode;
     int tests;
+    int rules;
     // display title screen and wait for input
     titleScreen();
     std::cin.clear();
     std::cin.get();
 
+    // ask if player want to test the game
+    clearScreen();
+    displayRulesMenu();
+    while(!(std::cin >> rules) or rules < 1 or rules > 2){
+        std::cin.clear();
+        std::cin.ignore();
+        clearScreen();
+        displayRulesMenu();
+    }
+    if (rules == 1){
+        displayRules();
+        std::cin.clear();
+        std::cin.ignore();
+        std::cin.get();
+    }
     // ask if player want to test the game
     clearScreen();
     displayTestsMenu();
@@ -81,7 +97,7 @@ int main() {
     // ask if the player/s want only one or three shot/s per turn
     do{
         std::cin.clear();
-        std::cin.ignore(numeric_limits<streamsize>::max(), '\n');
+        std::cin.ignore();
         clearScreen();
         displayShootMenu();
     }while(!(std::cin >> shootMode) or shootMode < 1 or shootMode > 2);
