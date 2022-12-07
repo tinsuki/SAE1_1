@@ -2,7 +2,7 @@
 #include "functions.h"
 #include "typeDef.h"
 
-void AIRandomShoot(Player &aPlayer, Player &anAI){
+void AIRandomShoot(Player &aPlayer, Player &anAI, bool saving, ofstream &saveFile){
     char x;
     int y;
     Coordinate coordi;
@@ -22,9 +22,12 @@ void AIRandomShoot(Player &aPlayer, Player &anAI){
             displayPlayerNames(aPlayer, anAI);
             displayGrid(aPlayer, anAI);
             std::cout << std::endl;
-            std::cout << "AI shoot in " << x << y << std::endl;
-            std::cout << std::endl;
+            std::cout << "AI shoot in " << x << y << std::endl << std::endl;
             std::cout << "Ship sank" << std::endl << std::endl;
+            if (saving){
+                saveFile << "AI shoot in " << x << y << std::endl;
+                saveFile << "Ship sank" << std::endl << std::endl;
+            }
             anAI.score++;
         }
         else {
@@ -33,9 +36,12 @@ void AIRandomShoot(Player &aPlayer, Player &anAI){
             displayPlayerNames(aPlayer, anAI);
             displayGrid(aPlayer, anAI);
             std::cout << std::endl;
-            std::cout << "AI shoot in " << x << y << std::endl;
-            std::cout << std::endl;
+            std::cout << "AI shoot in " << x << y << std::endl << std::endl;
             std::cout << "Ship hit" << std::endl << std::endl;
+            if (saving){
+                saveFile << "AI shoot in " << x << y << std::endl;
+                saveFile << "Ship hit" << std::endl << std::endl;
+            }
         }
     }
     else {
@@ -44,14 +50,17 @@ void AIRandomShoot(Player &aPlayer, Player &anAI){
         displayPlayerNames(aPlayer, anAI);
         displayGrid(aPlayer, anAI);
         std::cout << std::endl;
-        std::cout << "AI shoot in " << x << y << std::endl;
-        std::cout << std::endl;
+        std::cout << "AI shoot in " << x << y << std::endl << std::endl;
         std::cout << "Miss" << std::endl << std::endl;
+        if (saving){
+            saveFile << "AI shoot in " << x << y << std::endl;
+            saveFile << "Miss" << std::endl << std::endl;
+        }
     }
 }
 
 
-void AIOptimisedShoot(Player &anAI, Player &aPlayer, bool& found, char& dir, char& previousX, int& previousY, char& oriX, int& oriY){
+void AIOptimisedShoot(Player &anAI, Player &aPlayer, bool& found, char& dir, char& previousX, int& previousY, char& oriX, int& oriY,  bool saving, ofstream &saveFile){
     char x;
     int y;
     Coordinate coordi;
@@ -161,9 +170,12 @@ void AIOptimisedShoot(Player &anAI, Player &aPlayer, bool& found, char& dir, cha
             displayPlayerNames(aPlayer, anAI);
             displayGrid(aPlayer, anAI);
             std::cout << std::endl;
-            std::cout << "AI shoot in " << x << y << std::endl;
-            std::cout << std::endl;
+            std::cout << "AI shoot in " << x << y << std::endl << std::endl;
             std::cout << "Ship sank" << std::endl << std::endl;
+            if (saving){
+                saveFile << "AI shoot in " << x << y << std::endl;
+                saveFile << "Ship sank" << std::endl << std::endl;
+            }
         }
         else {
             if (!found){
@@ -184,9 +196,12 @@ void AIOptimisedShoot(Player &anAI, Player &aPlayer, bool& found, char& dir, cha
             displayPlayerNames(aPlayer, anAI);
             displayGrid(aPlayer, anAI);
             std::cout << std::endl;
-            std::cout << "AI shoot in " << x << y << std::endl;
-            std::cout << std::endl;
-            std::cout << "Ship hit" << std::endl << std::endl;
+            std::cout << "AI shoot in " << x << y << std::endl << std::endl;
+            std::cout << "Ship Hit" << std::endl << std::endl;
+            if (saving){
+                saveFile << "AI shoot in " << x << y << std::endl;
+                saveFile << "Ship Hit" << std::endl << std::endl;
+            }
 
         }
     }
@@ -196,9 +211,12 @@ void AIOptimisedShoot(Player &anAI, Player &aPlayer, bool& found, char& dir, cha
         displayPlayerNames(aPlayer, anAI);
         displayGrid(aPlayer, anAI);
         std::cout << std::endl;
-        std::cout << "AI shoot in " << x << y << std::endl;
-        std::cout << std::endl;
+        std::cout << "AI shoot in " << x << y << std::endl << std::endl;
         std::cout << "Miss" << std::endl << std::endl;
+        if (saving){
+            saveFile << "AI shoot in " << x << y << std::endl;
+            saveFile << "Miss" << std::endl << std::endl;
+        }
         if (found){
             if (oriDir != 'N'){
                 switch (dir) {
@@ -234,7 +252,7 @@ void AIOptimisedShoot(Player &anAI, Player &aPlayer, bool& found, char& dir, cha
     }
 }
 
-void AICrossShoot(Player &anAI, Player &aPlayer,char& currentX, int& currentY, bool& found, char& dir, char& previousX, int& previousY, char& oriX, int& oriY){
+void AICrossShoot(Player &anAI, Player &aPlayer, char& currentX, int& currentY, bool& found, char& dir, char& previousX, int& previousY, char& oriX, int& oriY, bool saving, ofstream &saveFile){
     char x;
     int y;
     Coordinate coordi;
@@ -355,9 +373,12 @@ void AICrossShoot(Player &anAI, Player &aPlayer,char& currentX, int& currentY, b
             displayPlayerNames(aPlayer, anAI);
             displayGrid(aPlayer, anAI);
             std::cout << std::endl;
-            std::cout << "AI shoot in " << x << y << std::endl;
-            std::cout << std::endl;
-            std::cout << "Ship sank" << std::endl << std::endl;
+            std::cout << "AI shoot in " << x << y << std::endl << std::endl;
+            std::cout << "Ship Sank" << std::endl << std::endl;
+            if (saving){
+                saveFile << "AI shoot in " << x << y << std::endl;
+                saveFile << "Ship Sank" << std::endl << std::endl;
+            }
         }
         else {
             if (!found){
@@ -378,9 +399,12 @@ void AICrossShoot(Player &anAI, Player &aPlayer,char& currentX, int& currentY, b
             displayPlayerNames(aPlayer, anAI);
             displayGrid(aPlayer, anAI);
             std::cout << std::endl;
-            std::cout << "AI shoot in " << x << y << std::endl;
-            std::cout << std::endl;
-            std::cout << "Ship hit" << std::endl << std::endl;
+            std::cout << "AI shoot in " << x << y << std::endl << std::endl;
+            std::cout << "Ship Hit" << std::endl << std::endl;
+            if (saving){
+                saveFile << "AI shoot in " << x << y << std::endl;
+                saveFile << "Ship Hit" << std::endl << std::endl;
+            }
 
         }
     }
@@ -390,9 +414,12 @@ void AICrossShoot(Player &anAI, Player &aPlayer,char& currentX, int& currentY, b
         displayPlayerNames(aPlayer, anAI);
         displayGrid(aPlayer, anAI);
         std::cout << std::endl;
-        std::cout << "AI shoot in " << x << y << std::endl;
-        std::cout << std::endl;
+        std::cout << "AI shoot in " << x << y << std::endl << std::endl;
         std::cout << "Miss" << std::endl << std::endl;
+        if (saving){
+            saveFile << "AI shoot in " << x << y << std::endl;
+            saveFile << "Miss" << std::endl << std::endl;
+        }
         if (found){
             if (oriDir != 'N'){
                 switch (dir) {

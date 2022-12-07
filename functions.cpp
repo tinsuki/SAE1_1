@@ -1,11 +1,13 @@
 #ifdef __WIN32
+// if the os is windows include a library to change the color of the text in console
 #include <windows.h>
+// create the variable to change the color of text in the console
 HANDLE hConsole = GetStdHandle(STD_OUTPUT_HANDLE);
 #endif
 #include "functions.h"
-#include <stdio.h>
 
 void displayTitle(){
+    // change the color system when compile depending on the os
     #ifdef __WIN32
     SetConsoleTextAttribute(hConsole,FOREGROUND_RED | FOREGROUND_BLUE | FOREGROUND_GREEN);
     std::cout << "          __                  ";
@@ -69,6 +71,7 @@ void titleScreen(){
 }
 
 void displayBattleShip(){
+    // change the color system when compile depending on the os
     #ifdef __WIN32
     SetConsoleTextAttribute(hConsole,FOREGROUND_BLUE);
     #endif
@@ -96,6 +99,7 @@ void displayBattleShip(){
 }
 
 void displayPlayerNames(Player& player1, Player& player2){
+    // calculate the number of space to display to center the players names
     int nbSpaceP1 = 31 - player1.name.length();
     int nbSpaceP2 = 31 - player2.name.length();
     std::string toDisplay = "";
@@ -117,6 +121,7 @@ void displayPlayerNames(Player& player1, Player& player2){
 }
 
 void askPlayerName(Player& aPlayer){
+    // ask for player name while the input is not good
     std::string name;
     std::cout << "Entrez le nom du joueur (40 char max) : ";
     while(!(std::cin >> name) || name.length() > 40){
@@ -128,6 +133,7 @@ void askPlayerName(Player& aPlayer){
 }
 
 void askPlayersNames(Player& aPlayer, Player& anOpponent){
+    // ask for players names using askPLayerName function
     clearScreen();
     displayTitle();
     std::cout << "Joueur n 1 :" << std::endl;
@@ -143,7 +149,7 @@ void initializeGrid(Cell aGrid[][GRIDSIZE]){
     for (int iRow = 0; iRow < GRIDSIZE; iRow++){
         for (int iCol = 0; iCol < GRIDSIZE; iCol++){
             // set the cell at ship = none and state = unshot
-            aGrid[iRow][iCol] = {NONE, UNSHOT} ;
+            aGrid[iRow][iCol] = {NONE, UNSHOT};
         }
     }
 }
@@ -174,6 +180,7 @@ void displayGrid(Player& aPlayer, Player& anOpponent) {
             Ship playerShip = aPlayer.grid[iRow][iCol].ship;
             State state = aPlayer.grid[iRow][iCol].state;
             if (playerShip != NONE){
+                // if there is a ship display the number of the ship with color depending of the state
                 switch (state) {
                 case UNSHOT:
                     #ifdef __WIN32
@@ -220,14 +227,15 @@ void displayGrid(Player& aPlayer, Player& anOpponent) {
                 }
             }
             else{
-            #ifdef __WIN32
-            SetConsoleTextAttribute(hConsole,FOREGROUND_BLUE);
-            std::cout << char(state) << "  ";
-            SetConsoleTextAttribute(hConsole,FOREGROUND_GREEN | FOREGROUND_BLUE | FOREGROUND_RED);
-            #endif
-            #ifndef __WIN32
-            std::cout << "\033[34m" << playerShip << "  \033[0m";
-            #endif
+                // if there is no ship, display the state in blue color
+                #ifdef __WIN32
+                SetConsoleTextAttribute(hConsole,FOREGROUND_BLUE);
+                std::cout << char(state) << "  ";
+                SetConsoleTextAttribute(hConsole,FOREGROUND_GREEN | FOREGROUND_BLUE | FOREGROUND_RED);
+                #endif
+                #ifndef __WIN32
+                std::cout << "\033[34m" << playerShip << "  \033[0m";
+                #endif
             }
         }
         for (int i = 0; i < 14; i++){
@@ -241,6 +249,7 @@ void displayGrid(Player& aPlayer, Player& anOpponent) {
         }
         for (int iCol = 1; iCol < GRIDSIZE-1; iCol++){
             State state = anOpponent.grid[iRow][iCol].state;
+            // display the state of the current cell with color depending on the state
             switch (state) {
             case UNSHOT:
                 #ifdef __WIN32
@@ -326,7 +335,7 @@ bool checkCoordinate(std::string aPlace, Coordinate& sommeCoordi){
     if (!isGoodLetter(letter)){
         return false;
     }
-    toUpper(letter);
+    toUpper(letter); // set letter to uppercase if needed
     int number;
     if (aPlace.length() == 3){
         if (!isNumber(aPlace[1]) or !isNumber(aPlace[2])){
@@ -349,6 +358,7 @@ bool checkCoordinate(std::string aPlace, Coordinate& sommeCoordi){
 }
 
 void clearScreen(){
+    // change the function depending on the os
     switch (OS) {
     case 1:
         system("cls");
@@ -371,6 +381,7 @@ void clearScreen(){
 }
 
 int randomIntBetween(int min, int max){
+    // generate a random number between min and max
     std::random_device rd;
     std::default_random_engine eng(rd());
     std::uniform_int_distribution<int> distr(min, max);
@@ -379,6 +390,7 @@ int randomIntBetween(int min, int max){
 }
 
 bool checkDirection(Cell grid[][GRIDSIZE], Ship ship, Coordinate coord, char dir){
+    // check if a ship can be place in a direction by checking if there isno ship next to it
     int row = coord.row;
     int col = coord.col+1 - 'A';
     if (row < 0 or row > GRIDSIZE-2 or col < 0 or col > GRIDSIZE-2){
@@ -420,6 +432,7 @@ bool checkDirection(Cell grid[][GRIDSIZE], Ship ship, Coordinate coord, char dir
 }
 
 bool placeShip(Cell grid[][GRIDSIZE], Placement place, Ship ship){
+    // check if a ship can be place and place it if it can be
     if (checkDirection(grid, ship, place.coordi, place.dir) == true){
         int col = place.coordi.col - 'A';
         int row = place.coordi.row;
@@ -437,6 +450,7 @@ bool placeShip(Cell grid[][GRIDSIZE], Placement place, Ship ship){
 }
 
 Ship nbShipToShip(int nbShip){
+    // return a ship depending on the parameter
     switch (nbShip) {
     case 0:
         return TORPEDO;
@@ -460,6 +474,7 @@ Ship nbShipToShip(int nbShip){
 }
 
 void askPlayerToPlace(Player & aPlayer, Player & anOpponent){
+    // ask for player to place all his ships
     std::string inputCoordi;
     Coordinate coordi;
     char dir;
@@ -490,6 +505,7 @@ void askPlayerToPlace(Player & aPlayer, Player & anOpponent){
 }
 
 bool alreadyShot(Cell aGrid[][GRIDSIZE], Coordinate someCoordi){
+    // check if a cell state is unshot
     int row = someCoordi.row;
     int col = someCoordi.col - 'A' +1;
     if (aGrid[row][col].state == UNSHOT){
@@ -499,6 +515,7 @@ bool alreadyShot(Cell aGrid[][GRIDSIZE], Coordinate someCoordi){
 }
 
 bool hitOrMiss(Cell aGrid[][GRIDSIZE], Coordinate someCoordi){
+    // return if a ship is hit or not
     int row = someCoordi.row;
     int col = someCoordi.col - 'A';
     if (aGrid[row][col+1].ship == NONE)
@@ -513,6 +530,7 @@ bool hitOrMiss(Cell aGrid[][GRIDSIZE], Coordinate someCoordi){
 }
 
 bool isBoatSank(Cell aGrid[][GRIDSIZE], int aRow, int aCol){
+    // find the ship and return if is sank or not
     int found = 1;
     int x = aCol;
     int y = aRow;
@@ -624,6 +642,7 @@ bool isBoatSank(Cell aGrid[][GRIDSIZE], int aRow, int aCol){
 
 
 void randomPlacement(Player& aPlayer){
+    // place all player ship randomly
     Coordinate coordi;
     char dir;
     Placement place;
@@ -641,6 +660,7 @@ void randomPlacement(Player& aPlayer){
 }
 
 void centerDisplay(std::string aText){
+    // center the text passed in parameter
     int nbSpace = (80 - aText.length())/2;
     for (int  i = 0; i < nbSpace; i++){
         std::cout << " ";
@@ -670,7 +690,7 @@ void displayShootMenu(){
     std::cout << "Enter your playing mode here : ";
 }
 
-void askPlayerToShot(Player& aPlayer, Player& anOpponent){
+void askPlayerToShot(Player& aPlayer, Player& anOpponent, bool saving, ofstream &saveFile){
     std::string inputCoordi;
     Coordinate coordi;
     displayTitle();
@@ -700,6 +720,10 @@ void askPlayerToShot(Player& aPlayer, Player& anOpponent){
             std::cout << std::endl;
             std::cout << aPlayer.name << " shoot on " << inputCoordi << std::endl << std::endl;
             std::cout << "Ship sank" << std::endl << std::endl;
+            if (saving){
+                saveFile << aPlayer.name << "shoot in " << char(coordi.col) << coordi.row << std::endl;
+                saveFile << "Ship sank" << std::endl;
+            }
             aPlayer.score++;
         }
         else{
@@ -709,6 +733,10 @@ void askPlayerToShot(Player& aPlayer, Player& anOpponent){
             displayGrid(aPlayer, anOpponent);
             std::cout << std::endl << aPlayer.name << " shoot on " << inputCoordi << std::endl << std::endl;
             std::cout << "Ship hit" << std::endl << std::endl;
+            if (saving){
+                saveFile << aPlayer.name << "shoot in " << char(coordi.col) << coordi.row << std::endl;
+                saveFile << "Ship hit" << endl;
+            }
         }
     }
     else{
@@ -718,6 +746,10 @@ void askPlayerToShot(Player& aPlayer, Player& anOpponent){
         displayGrid(aPlayer, anOpponent);
         std::cout << std::endl << aPlayer.name << " shoot on " << inputCoordi << std::endl << std::endl;
         std::cout << "Miss" << std::endl << std::endl;
+        if (saving){
+            saveFile << aPlayer.name << "shoot in " << char(coordi.col) << coordi.row << std::endl;
+            saveFile << "Miss" << std::endl << std::endl;
+        }
     }
 }
 
@@ -753,8 +785,43 @@ void displayRules(){
 void displayRulesMenu(){
     clearScreen();
     displayBattleShip();
-    centerDisplay("Do you want to read the rules");
+    centerDisplay("Do you want to read the rules ?");
     std::cout << std::endl;
     centerDisplay("1 - Yes");
     centerDisplay("2 - No");
+    std::cout << std::endl;
+    std::cout << std::endl;
+    std::cout << std::endl;
+    std::cout << "Enter youre answer here : ";
+}
+
+void displaySaveMenu(){
+    clearScreen();
+    displayBattleShip();
+    centerDisplay("Do you want to this game ?");
+    std::cout << std::endl;
+    centerDisplay("Only the actions are saved and the last save is erased");
+    std::cout << std::endl;
+    centerDisplay("The save is the direcory where the project is build and is named save.txt");
+    std::cout << std::endl;
+    centerDisplay("1 - Yes");
+    centerDisplay("2 - No");
+    std::cout << std::endl;
+    std::cout << std::endl;
+    std::cout << std::endl;
+    std::cout << "Enter youre answer here : ";
+}
+
+void displaySaveImpossibleMenu(){
+    clearScreen();
+    displayBattleShip();
+    centerDisplay("Save impossible do you want to continue ? :");
+    std::cout << std::endl;
+    std::cout << std::endl;
+    centerDisplay("1 - Yes");
+    centerDisplay("2 - No");
+    std::cout << std::endl;
+    std::cout << std::endl;
+    std::cout << std::endl;
+    std::cout << "Enter youre answer here : ";
 }
