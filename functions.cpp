@@ -753,18 +753,7 @@ void displayRules(){
 void displayRulesMenu(){
     clearScreen();
     displayBattleShip();
-    centerDisplay("Do you want to read the rules ?");
-    std::cout << std::endl;
-    centerDisplay("1 - Yes");
-    centerDisplay("2 - No");
-}
-
-void displaySaveMenu(){
-    clearScreen();
-    displayBattleShip();
-    centerDisplay("Do you want to this game ?");
-    std::cout << std::endl;
-    centerDisplay("Only the actions are saved and the last save is erased");
+    centerDisplay("Do you want to read the rules");
     std::cout << std::endl;
     centerDisplay("1 - Yes");
     centerDisplay("2 - No");

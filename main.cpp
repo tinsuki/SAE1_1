@@ -3,6 +3,7 @@
  * by SIMON Kevin GPA1 1st year student
  * a Battle-ship game in cpp for two player */
 
+#include <limits>
 #include "functions.h"
 #include "typeDef.h"
 #include "test.h"
