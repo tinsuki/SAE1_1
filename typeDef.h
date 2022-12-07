@@ -4,7 +4,7 @@
 #include <string>
 #include <iostream>
 #include <random>
-#include <fstream>
+#include <fstream> // include fstream to save
 
 
 #ifdef __WIN32
@@ -25,7 +25,7 @@
 using namespace std;
 
 //la dimension de la grille de jeu 10+2 pour detection du navire voisin
-const int GRIDSIZE = 12 ;
+const int GRIDSIZE = 12 ; // change SIZE in GRIDSIZE due to windows.h compatibility
 
 // le nombre de navires de guerre
 const int NBSHIPS = 5;
@@ -34,7 +34,7 @@ const int NBSHIPS = 5;
 const int NBCELLS = 17;
 
 // The maximun size of a ship
-const int MAXSHIPSIZE = 5;
+const int MAXSHIPSIZE = 5; // add the maximun size of a ship for a function
 
 // les navires de guerre disponibles et leur taille sur la grille
 enum Ship

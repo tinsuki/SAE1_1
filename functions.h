@@ -4,7 +4,7 @@
 #include "typeDef.h"
 
 /*
- * \brief Display the Title and a Whaou efect
+ * \brief Display the Title of the game
  * \return void
  */
 void displayTitle();
@@ -97,6 +97,8 @@ bool hitOrMiss(Cell aGrid[][GRIDSIZE], Coordinate someCoordi);
  * (hitOrMiss)
  * \param aPlayer : le joueur
  * \param anOpponent : l'adversaire
+ * \param saving : bool, if save is enable
+ * \param saveFile : an ofstream, the file stream in output for the save or a void ofstream
  * \return void
  */
 void askPlayerToShot(Player& aPlayer, Player& anOpponent, bool saving, ofstream &saveFile);
@@ -170,22 +172,59 @@ bool isNumber(char aLetter);
  */
 void toUpper(char& aLetter);
 
+/*
+ * \brief : display a menu for player/s to choose what kind of shoot player/s want
+ * \return void.
+ */
 void displayShootMenu();
 
+/*
+ * \brief : display a menu for player/s to choose what kind of play player/s want
+ * \return void.
+ */
 void displayPlayingMenu();
 
+/*
+ * \brief : display a menu for player/s to choose if he/they want to show tests results
+ * \return void.
+ */
 void displayTestsMenu();
 
+/*
+ * \brief : display the winner of the game
+ * \param aPlaye : Player, the winner
+ * \return void.
+ */
 void displayWin(Player aPlayer);
 
+/*
+ * \brief : display BattleShip in ascii art
+ * \return void.
+ */
 void displayBattleShip();
 
+/*
+ * \brief : display rules of the BattleShip
+ * \return void.
+ */
 void displayRules();
 
+/*
+ * \brief : display a menu for player/s to know if he/they want to see the rules
+ * \return void.
+ */
 void displayRulesMenu();
 
+/*
+ * \brief : display a menu for player/s to if he/they want to save the game
+ * \return void.
+ */
 void displaySaveMenu();
 
+/*
+ * \brief : display a menu for player/s to know if he/they want to continue if it's impossible to save
+ * \return void.
+ */
 void displaySaveImpossibleMenu();
 
 #endif // FUNCTIONS_H
