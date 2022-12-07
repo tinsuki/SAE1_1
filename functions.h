@@ -99,7 +99,7 @@ bool hitOrMiss(Cell aGrid[][GRIDSIZE], Coordinate someCoordi);
  * \param anOpponent : l'adversaire
  * \return void
  */
-void askPlayerToShot(Player& aPlayer, Player& anOpponent);
+void askPlayerToShot(Player& aPlayer, Player& anOpponent, bool saving, ofstream &saveFile);
 
 /*
  * \brief place tous les navires aleatoirement en respectant les règles
@@ -183,5 +183,9 @@ void displayBattleShip();
 void displayRules();
 
 void displayRulesMenu();
+
+void displaySaveMenu();
+
+void displaySaveImpossibleMenu();
 
 #endif // FUNCTIONS_H

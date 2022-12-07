@@ -670,7 +670,7 @@ void displayShootMenu(){
     std::cout << "Enter your playing mode here : ";
 }
 
-void askPlayerToShot(Player& aPlayer, Player& anOpponent){
+void askPlayerToShot(Player& aPlayer, Player& anOpponent, bool saving, ofstream &saveFile){
     std::string inputCoordi;
     Coordinate coordi;
     displayTitle();
@@ -700,6 +700,10 @@ void askPlayerToShot(Player& aPlayer, Player& anOpponent){
             std::cout << std::endl;
             std::cout << aPlayer.name << " shoot on " << inputCoordi << std::endl << std::endl;
             std::cout << "Ship sank" << std::endl << std::endl;
+            if (saving){
+                saveFile << aPlayer.name << "shoot in " << char(coordi.col) << coordi.row << std::endl;
+                saveFile << "Ship sank" << std::endl;
+            }
             aPlayer.score++;
         }
         else{
@@ -709,6 +713,10 @@ void askPlayerToShot(Player& aPlayer, Player& anOpponent){
             displayGrid(aPlayer, anOpponent);
             std::cout << std::endl << aPlayer.name << " shoot on " << inputCoordi << std::endl << std::endl;
             std::cout << "Ship hit" << std::endl << std::endl;
+            if (saving){
+                saveFile << aPlayer.name << "shoot in " << char(coordi.col) << coordi.row << std::endl;
+                saveFile << "Ship hit" << endl;
+            }
         }
     }
     else{
@@ -718,6 +726,10 @@ void askPlayerToShot(Player& aPlayer, Player& anOpponent){
         displayGrid(aPlayer, anOpponent);
         std::cout << std::endl << aPlayer.name << " shoot on " << inputCoordi << std::endl << std::endl;
         std::cout << "Miss" << std::endl << std::endl;
+        if (saving){
+            saveFile << aPlayer.name << "shoot in " << char(coordi.col) << coordi.row << std::endl;
+            saveFile << "Miss" << std::endl << std::endl;
+        }
     }
 }
 
@@ -757,6 +769,10 @@ void displayRulesMenu(){
     std::cout << std::endl;
     centerDisplay("1 - Yes");
     centerDisplay("2 - No");
+    std::cout << std::endl;
+    std::cout << std::endl;
+    std::cout << std::endl;
+    std::cout << "Enter youre answer here : ";
 }
 
 void displaySaveMenu(){
@@ -768,4 +784,22 @@ void displaySaveMenu(){
     std::cout << std::endl;
     centerDisplay("1 - Yes");
     centerDisplay("2 - No");
+    std::cout << std::endl;
+    std::cout << std::endl;
+    std::cout << std::endl;
+    std::cout << "Enter youre answer here : ";
+}
+
+void displaySaveImpossibleMenu(){
+    clearScreen();
+    displayBattleShip();
+    centerDisplay("Save impossible do you want to continue ? :");
+    std::cout << std::endl;
+    std::cout << std::endl;
+    centerDisplay("1 - Yes");
+    centerDisplay("2 - No");
+    std::cout << std::endl;
+    std::cout << std::endl;
+    std::cout << std::endl;
+    std::cout << "Enter youre answer here : ";
 }

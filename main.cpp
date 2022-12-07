@@ -18,12 +18,50 @@ int main() {
     int shootMode;
     int tests;
     int rules;
+    int save;
+    bool saving;
+    ofstream saveFile;
     // display title screen and wait for input
     titleScreen();
     std::cin.clear();
     std::cin.get();
 
-    // ask if player want to test the game
+    // ask if the player want to save the game actions
+    clearScreen();
+    displaySaveMenu();
+    while(!(std::cin >> save) or save < 1 or save > 2){
+        std::cin.clear();
+        std::cin.ignore();
+        clearScreen();
+        displaySaveMenu();
+    }
+
+    if (save == 1){
+        #ifdef __WIN32
+        saveFile.open("..\\SAE1_1\\save.txt", ios::trunc);
+        #else
+        saveFile.open("../SAE1_1/save.txt", ios::trunc);
+        #endif
+        if (!saveFile){
+            clearScreen();
+            displaySaveImpossibleMenu();
+            while(!(std::cin >> save) or save < 1 or save > 2){
+                std::cin.clear();
+                std::cin.ignore();
+                clearScreen();
+                displaySaveMenu();
+            }
+            if (save ==2){
+                return 1;
+            }
+
+        }
+        else{
+            saving = true;
+        }
+    };
+
+    // ask if player want to view the game rules
     clearScreen();
     displayRulesMenu();
     while(!(std::cin >> rules) or rules < 1 or rules > 2){
@@ -195,6 +233,11 @@ int main() {
         }
         randomPlacement(player2);
     }
+
+    if (saving){
+        saveFile << player1.name << "    |    " << player2.name << std::endl;
+    }
+
     // init variable for the game loop
     Player playerList[2] = {player1, player2};
     clearScreen();
@@ -210,7 +253,7 @@ int main() {
         clearScreen();
         switch (playingMode) {
         case 1:
-            askPlayerToShot(playerList[playerIndice], playerList[1-playerIndice]);
+            askPlayerToShot(playerList[playerIndice], playerList[1-playerIndice], saving, saveFile);
             if (shootMode == 2){
                 shotLeft -= 1;
                 if (shotLeft < 1){
@@ -227,13 +270,13 @@ int main() {
             break;
         case 2:
             if (playerList[playerIndice].name != "AI"){
-                askPlayerToShot(playerList[playerIndice], playerList[1-playerIndice]);
+                askPlayerToShot(playerList[playerIndice], playerList[1-playerIndice], saving, saveFile);
                 std::cout << "Press Enter to continue." << std::endl;
                 std::cin.ignore();
                 std::cin.get();
             }
             else {
-                AIRandomShoot(playerList[0], playerList[1]);
+                AIRandomShoot(playerList[0], playerList[1], saving , saveFile);
                 std::cout << "Press Enter to continue." << std::endl;
                 std::cin.get();
             }
@@ -250,7 +293,7 @@ int main() {
             break;
         case 3:
              if (playerList[playerIndice].name != "AI"){
-                askPlayerToShot(playerList[playerIndice], playerList[1-playerIndice]);
+                askPlayerToShot(playerList[playerIndice], playerList[1-playerIndice], saving, saveFile);
                 std::cout << "Press Enter to continue." << std::endl;
                 std::cin.ignore();
                 std::cin.get();
@@ -259,7 +302,7 @@ int main() {
                 displayTitle();
                 displayPlayerNames(playerList[0], playerList[1]);
                 displayGrid(playerList[0], playerList[1]);
-                AIOptimisedShoot(playerList[playerIndice], playerList[1-playerIndice], AIFound, AIDir, AIPreviousX, AIPreviousY, AIOriX, AIOriY);
+                AIOptimisedShoot(playerList[playerIndice], playerList[1-playerIndice], AIFound, AIDir, AIPreviousX, AIPreviousY, AIOriX, AIOriY, saving, saveFile);
                 std::cout << "Press Enter to continue." << std::endl;
                 std::cin.get();
             }
@@ -276,7 +319,7 @@ int main() {
             break;
         case 4:
             if (playerList[playerIndice].name != "AI"){
-                askPlayerToShot(playerList[playerIndice], playerList[1-playerIndice]);
+                askPlayerToShot(playerList[playerIndice], playerList[1-playerIndice], saving, saveFile);
                 std::cout << "Press Enter to continue." << std::endl;
                 std::cin.ignore();
                 std::cin.get();
@@ -285,7 +328,7 @@ int main() {
                 displayTitle();
                 displayPlayerNames(playerList[0], playerList[1]);
                 displayGrid(playerList[0], playerList[1]);
-                AICrossShoot(playerList[playerIndice], playerList[1-playerIndice], AICurrentX, AICurrentY, AIFound, AIDir, AIPreviousX, AIPreviousY, AIOriX, AIOriY);
+                AICrossShoot(playerList[playerIndice], playerList[1-playerIndice], AICurrentX, AICurrentY, AIFound, AIDir, AIPreviousX, AIPreviousY, AIOriX, AIOriY, saving, saveFile);
                 std::cout << "Press Enter to continue." << std::endl;
                 std::cin.get();
             }
