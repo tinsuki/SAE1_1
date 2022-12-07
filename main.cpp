@@ -10,7 +10,6 @@
 #include "AI.h"
 
 int main() {
-    std::string entry;
     if (OS == 0){ // test if the clearScreen function will work depending on the os
         std::cout << "votre systeme d'exploitation n'est pas pris en charge, ce jeu fonctionne sous \nwindows 32/64bits, linux ou mac" << std::endl;
         return 1;
