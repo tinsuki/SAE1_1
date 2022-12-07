@@ -701,25 +701,42 @@ void askPlayerToShot(Player& aPlayer, Player& anOpponent){
           ){
         std::cin.clear();
         std::cin.ignore();
+        clearScreen();
+        displayTitle();
+        displayPlayerNames(aPlayer, anOpponent);
+        displayGrid(aPlayer, anOpponent);
+        std::cout << std::endl;
         std::cout << "Invalid coordinates." << std::endl;
         std::cout << aPlayer.name << " where do you want to shoot ? (example C6): ";
     }
-    clearScreen();
-    displayTitle();
-    displayPlayerNames(aPlayer, anOpponent);
-    displayGrid(aPlayer, anOpponent);
-    std::cout << aPlayer.name << " shoot on " << inputCoordi << std::endl << std::endl;
+
     if (hitOrMiss(anOpponent.grid, coordi)){
         if (isBoatSank(anOpponent.grid, coordi.row, coordi.col-'A'+1)){
-            std::cout << "Ship sank" << std::endl;
+            clearScreen();
+            displayTitle();
+            displayPlayerNames(aPlayer, anOpponent);
+            displayGrid(aPlayer, anOpponent);
+            std::cout << std::endl;
+            std::cout << aPlayer.name << " shoot on " << inputCoordi << std::endl << std::endl;
+            std::cout << "Ship sank" << std::endl << std::endl;
             aPlayer.score++;
         }
         else{
-            std::cout << "Ship hit" << std::endl;
+            clearScreen();
+            displayTitle();
+            displayPlayerNames(aPlayer, anOpponent);
+            displayGrid(aPlayer, anOpponent);
+            std::cout << std::endl << aPlayer.name << " shoot on " << inputCoordi << std::endl << std::endl;
+            std::cout << "Ship hit" << std::endl << std::endl;
         }
     }
     else{
-        std::cout << "Miss" << std::endl;
+        clearScreen();
+        displayTitle();
+        displayPlayerNames(aPlayer, anOpponent);
+        displayGrid(aPlayer, anOpponent);
+        std::cout << std::endl << aPlayer.name << " shoot on " << inputCoordi << std::endl << std::endl;
+        std::cout << "Miss" << std::endl << std::endl;
     }
 }
 

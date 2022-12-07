@@ -219,10 +219,7 @@ int main() {
                 std::cin.get();
             }
             else {
-                displayTitle();
-                displayPlayerNames(playerList[0], playerList[1]);
-                displayGrid(playerList[0], playerList[1]);
-                AIRandomShoot(playerList[0].grid, playerList[1]);
+                AIRandomShoot(playerList[0], playerList[1]);
                 std::cout << "Press Enter to continue." << std::endl;
                 std::cin.get();
             }
@@ -248,7 +245,7 @@ int main() {
                 displayTitle();
                 displayPlayerNames(playerList[0], playerList[1]);
                 displayGrid(playerList[0], playerList[1]);
-                AIOptimisedShoot(playerList[playerIndice], playerList[1-playerIndice].grid, AIFound, AIDir, AIPreviousX, AIPreviousY, AIOriX, AIOriY);
+                AIOptimisedShoot(playerList[playerIndice], playerList[1-playerIndice], AIFound, AIDir, AIPreviousX, AIPreviousY, AIOriX, AIOriY);
                 std::cout << "Press Enter to continue." << std::endl;
                 std::cin.get();
             }
@@ -274,7 +271,7 @@ int main() {
                 displayTitle();
                 displayPlayerNames(playerList[0], playerList[1]);
                 displayGrid(playerList[0], playerList[1]);
-                AICrossShoot(playerList[playerIndice], playerList[1-playerIndice].grid, AICurrentX, AICurrentY, AIFound, AIDir, AIPreviousX, AIPreviousY, AIOriX, AIOriY);
+                AICrossShoot(playerList[playerIndice], playerList[1-playerIndice], AICurrentX, AICurrentY, AIFound, AIDir, AIPreviousX, AIPreviousY, AIOriX, AIOriY);
                 std::cout << "Press Enter to continue." << std::endl;
                 std::cin.get();
             }
