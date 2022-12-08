@@ -240,7 +240,7 @@ int main() {
 
     // if save is enabled, enter the name of players in the save
     if (saving){
-        saveFile << player1.name << "    |    " << player2.name << std::endl;
+        saveFile << player1.name << "    |    " << player2.name << std::endl << std::endl;
     }
 
     // init variable for the game loop
