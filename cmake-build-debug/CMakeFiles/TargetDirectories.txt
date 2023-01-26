@@ -1,3 +1,0 @@
-/home/tinsuki/Dev1/SAE1_1/cmake-build-debug/CMakeFiles/SAE1_1.dir
-/home/tinsuki/Dev1/SAE1_1/cmake-build-debug/CMakeFiles/edit_cache.dir
-/home/tinsuki/Dev1/SAE1_1/cmake-build-debug/CMakeFiles/rebuild_cache.dir
